@@ -711,7 +711,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamNumber: 0
-  fireRate: 0.1
+  weaponTemplate: {fileID: 11400000, guid: 8f66917ea9621ed4d9430eca512e550b, type: 2}
 --- !u!82 &1303399788
 AudioSource:
   m_ObjectHideFlags: 0
@@ -722,7 +722,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ca5c0139e8999ac499d115d423422200, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
