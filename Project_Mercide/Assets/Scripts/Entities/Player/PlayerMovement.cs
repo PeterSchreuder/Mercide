@@ -44,8 +44,6 @@ public class PlayerMovement : EntityMovement
             jumpCount = maxJumpCount;
         }
 
-        print(jumpCount);
-
         Move();
     }
 
