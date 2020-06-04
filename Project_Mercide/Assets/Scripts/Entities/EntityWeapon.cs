@@ -17,7 +17,13 @@ public class EntityWeapon : GlobalObject
         base.Start();
 
         if (!weaponTemplate)
+        {
             Debug.LogError("No weaponTemplate found!");
+        }
+        else
+        {
+            weaponTemplate.WeaponInitialize();
+        }
 
         audioSource = GetComponent<AudioSource>();
 
@@ -45,7 +51,7 @@ public class EntityWeapon : GlobalObject
 
         // Disable shooting
         canShoot = false;
-        weaponTemplate.wpAmmoCurrent--;
+        //weaponTemplate.wpAmmoCurrent--;
         StartCoroutine(ShootTimer(weaponTemplate.wpFireRate));
 
         // Play weapon sound

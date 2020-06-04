@@ -10,13 +10,13 @@ public class WeaponTemplate : ScriptableObject
     public string wpName = "WeaponTemplate";
     public float wpFireRate = 0.1f;
     public float wpDamage = 25;
+    public float wpReloadSpeed = 1;
 
     [Header("Ammo")]
     public int wpMagazineSize = 30;
-    public int wpAmmoCurrent = 0;
     public int wpAmmoBackup = 90;
     [HideInInspector]
-    public int wpAmmoBackupMax = 0;
+    public int wpAmmoCurrent = 0, wpAmmoBackupMax = 0;
 
     [Header("Resources")]
     public AudioClip wpSound;
@@ -27,6 +27,8 @@ public class WeaponTemplate : ScriptableObject
     /// </summary>
     public void WeaponInitialize()
     {
+        wpAmmoCurrent = wpMagazineSize;
+        wpAmmoBackup -= wpAmmoCurrent;
         wpAmmoBackupMax = wpAmmoBackup;
     }
 }
