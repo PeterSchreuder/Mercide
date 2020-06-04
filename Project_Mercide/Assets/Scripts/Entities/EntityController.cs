@@ -9,8 +9,10 @@ public class EntityController : GlobalObject
     public EntityWeapon Holster { get => holster; set => holster = value; }
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
+
         holster.TeamNumber = TeamNumber;
     }
 

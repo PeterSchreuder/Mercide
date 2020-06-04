@@ -44,6 +44,8 @@ public class PlayerMovement : EntityMovement
             jumpCount = maxJumpCount;
         }
 
+        print(jumpCount);
+
         Move();
     }
 
@@ -54,7 +56,6 @@ public class PlayerMovement : EntityMovement
         if (Input.GetButtonDown("Jump") && jumpCount > 0)
         {
             isJumping = true;
-            print(1);
         }
     }
 
@@ -78,8 +79,9 @@ public class PlayerMovement : EntityMovement
         {
             rb.AddForce(new Vector2(0f, jumpForce));
             jumpCount--;
-            isJumping = false;
+            
         }
+        isJumping = false;
     }
 
     

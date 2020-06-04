@@ -7,6 +7,7 @@ public class EntityMovement : MonoBehaviour
     protected enum MoveVerticalStates { Noone, Jumping, Grounded, Crouched };
     protected MoveVerticalStates MoveVerticalStateCurrent = MoveVerticalStates.Noone;
 
+    public Transform head;
     public Transform feet;
     public LayerMask groundObjects;
     public float checkRadius;
@@ -26,14 +27,12 @@ public class EntityMovement : MonoBehaviour
 
     protected virtual void FixedUpdate()
     {
-        isGrounded = Physics2D.OverlapCircle(feet.position, 1, groundObjects);//CheckIfGrounded();
+        isGrounded = CheckIfGrounded();
     }
 
     protected bool CheckIfGrounded()
     {
-        Debug.DrawLine(feet.position, feet.position.AddY(distToFeet), Color.red, 1);
-
-        bool _return = Physics.Raycast(transform.position, -Vector3.up, -distToFeet);
+        bool _return = Physics2D.OverlapCircle(feet.position, checkRadius, groundObjects);//Physics.Raycast(transform.position, -Vector3.up, -distToFeet);
 
         return _return;
     }
@@ -42,5 +41,11 @@ public class EntityMovement : MonoBehaviour
     {
         facingRight = !facingRight;
         transform.Rotate(0f, 180f, 0f);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(head.position, checkRadius);
+        Gizmos.DrawSphere(feet.position, checkRadius);
     }
 }
