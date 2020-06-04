@@ -32,8 +32,20 @@ public class EntityWeapon : GlobalObject
         if (!canShoot)
             return;
 
+        if (weaponTemplate.wpAmmoCurrent == 0 && weaponTemplate.wpAmmoBackup == 0)
+        {
+            print("Out of ammo");
+            return;
+        }
+        else if (weaponTemplate.wpAmmoCurrent == 0)
+        {
+            print("reload");
+            return;
+        }
+
         // Disable shooting
         canShoot = false;
+        weaponTemplate.wpAmmoCurrent--;
         StartCoroutine(ShootTimer(weaponTemplate.wpFireRate));
 
         // Play weapon sound
