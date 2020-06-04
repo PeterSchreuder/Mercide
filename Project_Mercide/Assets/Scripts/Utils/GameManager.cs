@@ -6,6 +6,7 @@ public enum GameStates { Begin, Mid, Win, Lose };
 
 public class GameManager : MonoBehaviour
 {
+
     private GameStates gameStateCurrent;
     public GameStates GameStateCurrent
     {
