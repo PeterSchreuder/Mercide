@@ -2,13 +2,10 @@
 
 public enum UIScreenTypes { Begin, Mid, Pause, Win, Lose };
 
-public delegate void ToggleScreenEvent(UIScreenTypes _screen);
+
 
 public class UIScreenManager : MonoBehaviour
 {
-    // Delegates
-    ToggleScreenEvent setScreenStateEvent;
-
     // The screen list
     [SerializeField]
     private UIScreen[] uiScreens;
@@ -56,19 +53,10 @@ public class UIScreenManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        // Assign the delegates
-        setScreenStateEvent += SetScreenStateCurrent;
-
-
         // Setup
         ToggleAllScreens(false);
 
-        setScreenStateEvent(UIScreenTypes.Begin);
-    }
-
-    private void SetScreenStateCurrent(UIScreenTypes _type)
-    {
-        ScreenStateCurrent = _type;
+        ScreenStateCurrent = UIScreenTypes.Begin;
     }
 
     //- Open/Close screen functions -
