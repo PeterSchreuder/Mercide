@@ -10,8 +10,6 @@ public class PlayerMovement : EntityMovement
     public int maxJumpCount = 1;
 
     private Rigidbody2D rb;
-    private bool facingRight = true;
-    private float moveDirection;
     private bool isJumping = false;
 
     private int jumpCount;
@@ -84,9 +82,5 @@ public class PlayerMovement : EntityMovement
         }
     }
 
-    private void FlipCharacter()
-    {
-        facingRight = !facingRight;
-        transform.Rotate(0f, 180f, 0f);
-    }
+    
 }

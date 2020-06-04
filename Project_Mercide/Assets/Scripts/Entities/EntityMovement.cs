@@ -11,6 +11,9 @@ public class EntityMovement : MonoBehaviour
     public LayerMask groundObjects;
     public float checkRadius;
 
+    protected bool facingRight = true;
+    protected float moveDirection;
+
     protected bool isGrounded = false;
 
     protected float distToFeet;
@@ -33,5 +36,11 @@ public class EntityMovement : MonoBehaviour
         bool _return = Physics.Raycast(transform.position, -Vector3.up, -distToFeet);
 
         return _return;
+    }
+
+    protected void FlipCharacter()
+    {
+        facingRight = !facingRight;
+        transform.Rotate(0f, 180f, 0f);
     }
 }

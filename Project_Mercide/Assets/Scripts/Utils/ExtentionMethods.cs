@@ -5,6 +5,8 @@ using System;
 
 public static class ExtentionMethods
 {
+    #region Vector3
+
     public static Vector3 AddX(this Vector3 value, float add)
     {
         return new Vector3(value.x + add, value.y, value.z);
@@ -29,6 +31,27 @@ public static class ExtentionMethods
     {
         return new Vector3(_v1.x * _v2.x, _v1.y * _v2.y, _v1.z * _v2.z);
     }
+
+    #endregion
+
+    #region Quaternion
+
+    public static Quaternion AddX(this Quaternion value, float add)
+    {
+        return Quaternion.Euler(value.x + add, value.y, value.z);
+    }
+
+    public static Quaternion AddY(this Quaternion value, float add)
+    {
+        return Quaternion.Euler(value.x + add, value.y + add, value.z);
+    }
+
+    public static Quaternion AddZ(this Quaternion value, float add)
+    {
+        return Quaternion.Euler(value.x, value.y, value.z + add);
+    }
+
+    #endregion
 
     public static float Round(this float _float)
     {
