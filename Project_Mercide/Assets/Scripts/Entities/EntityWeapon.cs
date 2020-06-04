@@ -18,6 +18,5 @@ public class EntityWeapon : GlobalObject
     {
         GameObject _bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
         _bullet.GetComponent<Bullet>().TeamNumber = TeamNumber;
-        print("Pew");
     }
 }
