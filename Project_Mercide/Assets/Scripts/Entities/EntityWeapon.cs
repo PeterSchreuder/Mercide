@@ -34,7 +34,7 @@ public class EntityWeapon : GlobalObject
         StartCoroutine(ShootTimer(fireRate));
 
         audioSource.pitch = Random.Range(0.95f, 1.10f);
-        audioSource.Play();
+        audioSource.PlayOneShot(audioSource.clip);
 
         GameObject _bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
         _bullet.GetComponent<Bullet>().TeamNumber = TeamNumber;
