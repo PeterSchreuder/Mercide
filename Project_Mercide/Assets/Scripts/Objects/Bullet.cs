@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Bullet : GlobalObject
 {
-    public float speed = 20f;
+    public BulletTemplate bulletTemplate;
+
     private Rigidbody2D rb;
 
     // Start is called before the first frame update
@@ -13,7 +14,7 @@ public class Bullet : GlobalObject
         base.Start();
 
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * speed;
+        rb.velocity = transform.right * bulletTemplate.bltSpeed;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -24,7 +25,11 @@ public class Bullet : GlobalObject
         if (_otherEntityController)
         {
             if (_otherEntityController.TeamNumber != TeamNumber)
+            {
                 _destroy = true;
+
+                _otherEntityController.HealthAdd(-bulletTemplate.bltDamage);
+            }
         }
         else
         {

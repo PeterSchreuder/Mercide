@@ -58,8 +58,12 @@ public class EntityWeapon : GlobalObject
         audioSource.pitch = Random.Range(0.95f, 1.10f);
         audioSource.PlayOneShot(weaponTemplate.wpSound);
 
+        // Create the bullet
         GameObject _bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
-        _bullet.GetComponent<Bullet>().TeamNumber = TeamNumber;
+        Bullet _bulletScript = _bullet.GetComponent<Bullet>();
+
+        _bulletScript.bulletTemplate.bltDamage = weaponTemplate.wpDamage;
+        _bulletScript.TeamNumber = TeamNumber;
     }
 
     /// <summary>

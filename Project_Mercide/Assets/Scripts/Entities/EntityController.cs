@@ -41,9 +41,6 @@ public class EntityController : GlobalObject
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (Input.GetButton("Fire1"))
-        {
-            Holster.Shoot();
-        }
+        
     }
 }
