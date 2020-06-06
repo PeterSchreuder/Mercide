@@ -57,7 +57,7 @@ public class PlayerMovement : EntityMovement
 
     private void Move()
     {
-        rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2((moveDirection * moveSpeed) * deltaTime, rb.velocity.y);
 
         if (isJumping && jumpCount > 0)
         {

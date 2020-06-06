@@ -14,7 +14,8 @@ public class Bullet : GlobalObject
         base.Start();
 
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * bulletTemplate.bltSpeed;
+        rb.velocity = (transform.right * bulletTemplate.bltSpeed) * deltaTime;
+        //transform.Translate()
     }
 
     void OnTriggerEnter2D(Collider2D other)

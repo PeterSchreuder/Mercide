@@ -7,6 +7,7 @@ public class EntityMovement : MonoBehaviour
     protected enum MoveVerticalStates { Noone, Jumping, Grounded, Crouched };
     protected MoveVerticalStates MoveVerticalStateCurrent = MoveVerticalStates.Noone;
 
+    //- Public
     public float moveSpeed = 5;
     public float jumpForce = 650;
 
@@ -16,20 +17,14 @@ public class EntityMovement : MonoBehaviour
     public float checkRadius;
     public int maxJumpCount = 1;
 
+    //- Protected
     protected bool isJumping = false;
-
     protected int jumpCount = 0;
-
-
     protected Rigidbody2D rb;
-
     protected bool facingRight = true;
     protected float moveDirection;
-
     protected bool isGrounded = false;
-
     protected float distToFeet;
-
     protected float deltaTime;
 
     protected virtual void Awake()

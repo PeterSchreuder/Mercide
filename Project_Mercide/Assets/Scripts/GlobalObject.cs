@@ -11,9 +11,16 @@ public class GlobalObject : MonoBehaviour
     private float health;
     public float Health { get => health; set => health = value; }
 
+    protected float deltaTime;
+
     protected virtual void Start()
     {
         Health = 100f;
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        deltaTime = Time.deltaTime;
     }
 
     public virtual void Die()
