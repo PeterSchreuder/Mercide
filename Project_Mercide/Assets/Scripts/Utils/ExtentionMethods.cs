@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public static class ExtentionMethods
@@ -56,6 +57,13 @@ public static class ExtentionMethods
     public static float Round(this float _float)
     {
         return Mathf.Round(_float);
+    }
+
+    public static Button OnDown(this Button _button)
+    {
+        Button _return = _button.OnDown();
+
+        return _return;
     }
 }
 

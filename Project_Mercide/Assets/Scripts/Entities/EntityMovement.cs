@@ -43,6 +43,18 @@ public class EntityMovement : MonoBehaviour
         transform.Rotate(0f, 180f, 0f);
     }
 
+    protected virtual void Animate()
+    {
+        if (moveDirection > 0 && !facingRight)
+        {
+            FlipCharacter();
+        }
+        else if (moveDirection < 0 && facingRight)
+        {
+            FlipCharacter();
+        }
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawSphere(head.position, checkRadius);

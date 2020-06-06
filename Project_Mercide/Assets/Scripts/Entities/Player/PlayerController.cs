@@ -12,7 +12,7 @@ public class PlayerController : EntityController
     {
         if (Input.GetButton("Fire1"))
         {
-            Holster.Shoot();
+            //Holster.Shoot();
         }
     }
 }

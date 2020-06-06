@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 4151255075306197344}
   - component: {fileID: 520291056739973780}
   - component: {fileID: 8668287105140526474}
-  - component: {fileID: 6157372344079268198}
+  - component: {fileID: 7253468654298996389}
   m_Layer: 5
   m_Name: Input Button
   m_TagString: Untagged
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6157372344079268198
+--- !u!114 &7253468654298996389
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8456279560719542494}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Script: {fileID: 11500000, guid: eb23188026998be4f9e5e463cdee0c66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
@@ -196,15 +196,21 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8668287105140526474}
   m_OnClick:
     m_PersistentCalls:
+      m_Calls: []
+  m_OnDown:
+    m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: 
+        m_MethodName: InputLeft
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_OnUp:
+    m_PersistentCalls:
+      m_Calls: []
