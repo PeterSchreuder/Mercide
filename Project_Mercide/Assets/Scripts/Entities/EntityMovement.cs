@@ -48,7 +48,10 @@ public class EntityMovement : MonoBehaviour
 
     protected bool CheckIfGrounded()
     {
-        bool _return = Physics2D.OverlapCircle(feet.position, checkRadius, groundObjects);//Physics.Raycast(transform.position, -Vector3.up, -distToFeet);
+        bool _return = false;
+
+        if (rb.velocity.y == 0)
+            _return = Physics2D.OverlapCircle(feet.position, checkRadius, groundObjects);//Physics.Raycast(transform.position, -Vector3.up, -distToFeet);
 
         return _return;
     }

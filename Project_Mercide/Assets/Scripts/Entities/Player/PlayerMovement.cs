@@ -41,7 +41,7 @@ public class PlayerMovement : EntityMovement
             jumpCount = maxJumpCount;
         }
 
-        
+        Move();
     }
 
     private void ProcessInput(EventParam _input)// int = horizontal, bool = jump
@@ -53,8 +53,6 @@ public class PlayerMovement : EntityMovement
         {
             isJumping = true;
         }
-
-        Move();
     }
 
     private void Move()
