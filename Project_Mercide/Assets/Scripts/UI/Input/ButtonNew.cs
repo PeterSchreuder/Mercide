@@ -12,10 +12,10 @@ namespace UnityEngine.UI
     [AddComponentMenu("UI/ButtonNew", 30)]
     public class ButtonNew : Selectable, IPointerClickHandler, ISubmitHandler, IPointerDownHandler
     {
-        [Serializable]
         /// <summary>
-        /// Function definition for a button click event.
+        /// Function definitions for the button click events.
         /// </summary>
+        [Serializable]
         public class ButtonClickedEvent : UnityEvent { }
 
         [Serializable]
@@ -24,6 +24,8 @@ namespace UnityEngine.UI
         [Serializable]
         public class ButtonUpEvent : UnityEvent { }
 
+        [Rename("Input Enter as Down")]
+        public bool downOnEnter = true;
 
         // Event delegates triggered on click.
         [FormerlySerializedAs("onClick")]
@@ -171,14 +173,39 @@ namespace UnityEngine.UI
 
         public override void OnPointerDown(PointerEventData eventData)
         {
+            base.OnPointerDown(eventData);
+
             if (eventData.button != PointerEventData.InputButton.Left)
                 return;
 
             Down();
         }
 
+        public override void OnPointerEnter(PointerEventData eventData)
+        {
+            base.OnPointerEnter(eventData);
+
+            if (eventData.button != PointerEventData.InputButton.Left)
+                return;
+
+            if (downOnEnter)
+                Down();
+        }
+
+        public override void OnPointerExit(PointerEventData eventData)
+        {
+            base.OnPointerExit(eventData);
+
+            if (eventData.button != PointerEventData.InputButton.Left)
+                return;
+
+            _down = false;
+        }
+
         public override void OnPointerUp(PointerEventData eventData)
         {
+            base.OnPointerUp(eventData);
+
             if (eventData.button != PointerEventData.InputButton.Left)
                 return;
 
