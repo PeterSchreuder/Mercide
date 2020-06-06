@@ -6,6 +6,11 @@ public enum GameStates { Begin, Mid, Win, Lose };
 
 public class GameManager : MonoBehaviour
 {
+    // Debugmode
+    [SerializeField]
+    private bool debugEnabled = true;
+    public bool DebugEnabled { get => debugEnabled; set => debugEnabled = value; }
+
 
     private GameStates gameStateCurrent;
     public GameStates GameStateCurrent
@@ -24,6 +29,9 @@ public class GameManager : MonoBehaviour
                     // Setup the game
 
                     GameStateCurrent = GameStates.Mid;
+
+                    if (DebugEnabled)
+                        EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Debug });
 
                     EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Mid });
                     EventManager.TriggerEvent("UIScreen:Close", new EventParam { UIScreenType = UIScreenTypes.Begin });
