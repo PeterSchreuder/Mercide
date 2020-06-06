@@ -1,11 +1,14 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public enum UIScreenTypes { Begin, Mid, Pause, Win, Lose };
+public enum UIScreenTypes { Begin, Mid, Pause, Win, Lose, Input };
 
 
 
 public class UIScreenManager : MonoBehaviour
 {
+    private Action<EventParam> openScreenListener;
+
     // The screen list
     [SerializeField]
     private UIScreen[] uiScreens;
@@ -57,6 +60,22 @@ public class UIScreenManager : MonoBehaviour
         ToggleAllScreens(false);
 
         ScreenStateCurrent = UIScreenTypes.Begin;
+
+        openScreenListener = new Action<EventParam>(OpenScreen);
+    }
+
+    void OnEnable()
+    {
+        //Register With Action variable
+        EventManager.StartListening("UIScreen:Open", OpenScreen);
+        EventManager.StartListening("UIScreen:Close", CloseScreen);
+    }
+
+    void OnDisable()
+    {
+        //Un-Register With Action variable
+        EventManager.StopListening("UIScreen:Open", OpenScreen);
+        EventManager.StopListening("UIScreen:Close", CloseScreen);
     }
 
     //- Open/Close screen functions -
@@ -87,8 +106,18 @@ public class UIScreenManager : MonoBehaviour
         ToggleScreen(_screen, true);
     }
 
+    public void OpenScreen(EventParam _screen)
+    {
+        ToggleScreen(_screen.UIScreenType, true);
+    }
+
     public void CloseScreen(UIScreenTypes _screen)
     {
         ToggleScreen(_screen, false);
+    }
+
+    public void CloseScreen(EventParam _screen)
+    {
+        ToggleScreen(_screen.UIScreenType, false);
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerMovement : EntityMovement
 {
+    private Action<EventParam> inputListener;
+
     public float moveSpeed;
     public float jumpForce;
     public int maxJumpCount = 1;
@@ -18,6 +20,19 @@ public class PlayerMovement : EntityMovement
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        inputListener = new Action<EventParam>(ProcessInput);
+    }
+
+    void OnEnable()
+    {
+        EventManager.StartListening("InputManager:Input", ProcessInput);
+    }
+
+    // - Stop listening
+    void OnDisable()
+    {
+        EventManager.StopListening("ClassOfSource:Input", ProcessInput);
     }
 
     protected override void Start()
@@ -30,9 +45,9 @@ public class PlayerMovement : EntityMovement
     // Update is called once per frame
     void Update()
     {
-        ProcessInput();
+        //ProcessInput();
 
-        Animate();
+        
     }
 
     protected override void FixedUpdate()
@@ -47,25 +62,17 @@ public class PlayerMovement : EntityMovement
         Move();
     }
 
-    private void ProcessInput()
+    private void ProcessInput(EventParam _input)// int = horizontal, bool = jump
     {
-        moveDirection = Input.GetAxis("Horizontal");
+        Debug.Log(_input.Bool);
 
-        if (Input.GetButtonDown("Jump") && jumpCount > 0)
+        
+        moveDirection = _input.Float;//Input.GetAxis("Horizontal");
+                                   //Input.GetButtonDown("Jump")
+
+        if (_input.Bool && jumpCount > 0)
         {
             isJumping = true;
-        }
-    }
-
-    private void Animate()
-    {
-        if (moveDirection > 0 && !facingRight)
-        {
-            FlipCharacter();
-        }
-        else if (moveDirection < 0 && facingRight)
-        {
-            FlipCharacter();
         }
     }
 
@@ -79,7 +86,12 @@ public class PlayerMovement : EntityMovement
             jumpCount--;
             
         }
+
+        // Reset the values
         isJumping = false;
+        Animate();
+        moveDirection = 0;
+
     }
 
     
