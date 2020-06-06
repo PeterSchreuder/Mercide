@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -31,12 +32,13 @@ using UnityEngine.Events;
 
     -= Made possible by:
     https://learn.unity.com/tutorial/create-a-simple-messaging-system-with-events#5cf5960fedbc2a281acd21fa
- 
+    and: https://stackoverflow.com/a/42034899
+
 */
 
 public class EventManager : MonoBehaviour
 {
-    private Dictionary<string, UnityEvent> eventDictionary;
+    private Dictionary<string, Action<EventParam>> eventDictionary;
 
     private static EventManager eventManager;
 
@@ -68,7 +70,7 @@ public class EventManager : MonoBehaviour
         // Create a new Dictionary
         if (eventDictionary == null)
         {
-            eventDictionary = new Dictionary<string, UnityEvent>();
+            eventDictionary = new Dictionary<string, Action<EventParam>>();
         }
     }
 
@@ -77,19 +79,20 @@ public class EventManager : MonoBehaviour
     /// </summary>
     /// <param name="_eventName"></param>
     /// <param name="_listener"></param>
-    public static void StartListening(string _eventName, UnityAction _listener)
+    public static void StartListening(string _eventName, Action<EventParam> _listener)
     {
-        UnityEvent _thisEvent = null;
+        Action<EventParam> _thisEvent = null;
 
         // Start listening to the event by adding a listener to an event in the Dictionary
         if (instance.eventDictionary.TryGetValue(_eventName, out _thisEvent))
         {
-            _thisEvent.AddListener(_listener);
+            _thisEvent += _listener;
+
+            instance.eventDictionary[_eventName] = _thisEvent;
         }
         else // If the event does not exist, create one
         {
-            _thisEvent = new UnityEvent();
-            _thisEvent.AddListener(_listener);
+            _thisEvent += _listener;
             instance.eventDictionary.Add(_eventName, _thisEvent);
         }
     }
@@ -99,17 +102,19 @@ public class EventManager : MonoBehaviour
     /// </summary>
     /// <param name="_eventName"></param>
     /// <param name="_listener"></param>
-    public static void StopListening(string _eventName, UnityAction _listener)
+    public static void StopListening(string _eventName, Action<EventParam> _listener)
     {
         if (eventManager == null)
             return;
 
-        UnityEvent _thisEvent = null;
+        Action<EventParam> _thisEvent = null;
 
         // Remove the listener from the event
         if (instance.eventDictionary.TryGetValue(_eventName, out _thisEvent))
         {
-            _thisEvent.RemoveListener(_listener);
+            _thisEvent -= _listener;
+
+            instance.eventDictionary[_eventName] = _thisEvent;
         }
     }
 
@@ -117,14 +122,24 @@ public class EventManager : MonoBehaviour
     /// Trigger an Event
     /// </summary>
     /// <param name="_eventName"></param>
-    public static void TriggerEvent(string _eventName)
+    public static void TriggerEvent(string _eventName, EventParam _eventParam = default)
     {
-        UnityEvent _thisEvent = null;
+        Action<EventParam> _thisEvent = null;
 
         // Trigger the event by getting it from the Dictionary and Invoking it
         if (instance.eventDictionary.TryGetValue(_eventName, out _thisEvent))
         {
-            _thisEvent.Invoke();
+            _thisEvent.Invoke(_eventParam);
         }
     }
+}
+
+// Parameter structure class
+public struct EventParam
+{
+    public UIScreenTypes UIScreenType;
+    public string String;
+    public int Int;
+    public float Float;
+    public bool Bool;
 }
