@@ -14,8 +14,6 @@ public class PlayerController : EntityController
     protected void Awake()
     {
         actionListener = new Action<EventParam>(FireWeapon);
-
-
     }
 
     // - Start listening
@@ -30,18 +28,9 @@ public class PlayerController : EntityController
         EventManager.StopListening("InputManager:Actions", FireWeapon);
     }
 
-    protected override void Update()
-    {
-        if (Input.GetButton("Fire1"))
-        {
-            //Holster.Shoot();
-        }
-    }
-
     protected void FireWeapon(EventParam _input)
     {
         if (_input.Bool)
             Holster.Shoot();
-
     }
 }

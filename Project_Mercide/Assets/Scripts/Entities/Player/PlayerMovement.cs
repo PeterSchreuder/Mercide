@@ -47,7 +47,7 @@ public class PlayerMovement : EntityMovement
     {
         //ProcessInput();
 
-        Animate();
+        
     }
 
     protected override void FixedUpdate()
@@ -89,6 +89,7 @@ public class PlayerMovement : EntityMovement
 
         // Reset the values
         isJumping = false;
+        Animate();
         moveDirection = 0;
 
     }
