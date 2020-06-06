@@ -8,6 +8,23 @@ public static class ExtentionMethods
 {
     #region Vector3
 
+    //- Change
+    public static Vector3 ChangeX(this Vector3 value, float value2)
+    {
+        return new Vector3(value2, value.y, value.z);
+    }
+
+    public static Vector3 ChangeY(this Vector3 value, float value2)
+    {
+        return new Vector3(value.x, value2, value.z);
+    }
+
+    public static Vector3 ChangeZ(this Vector3 value, float value2)
+    {
+        return new Vector3(value.x, value.y, value2);
+    }
+
+    //- Add
     public static Vector3 AddX(this Vector3 value, float add)
     {
         return new Vector3(value.x + add, value.y, value.z);

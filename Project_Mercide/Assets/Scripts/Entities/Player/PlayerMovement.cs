@@ -7,19 +7,9 @@ public class PlayerMovement : EntityMovement
 {
     private Action<EventParam> inputListener;
 
-    public float moveSpeed;
-    public float jumpForce;
-    public int maxJumpCount = 1;
-
-    private Rigidbody2D rb;
-    private bool isJumping = false;
-
-    private int jumpCount;
-
-
-    private void Awake()
+    protected override void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        base.Awake();
 
         inputListener = new Action<EventParam>(ProcessInput);
     }
@@ -42,14 +32,6 @@ public class PlayerMovement : EntityMovement
         jumpCount = maxJumpCount;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //ProcessInput();
-
-        
-    }
-
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -59,14 +41,11 @@ public class PlayerMovement : EntityMovement
             jumpCount = maxJumpCount;
         }
 
-        Move();
+        
     }
 
     private void ProcessInput(EventParam _input)// int = horizontal, bool = jump
     {
-        Debug.Log(_input.Bool);
-
-        
         moveDirection = _input.Float;//Input.GetAxis("Horizontal");
                                    //Input.GetButtonDown("Jump")
 
@@ -74,6 +53,8 @@ public class PlayerMovement : EntityMovement
         {
             isJumping = true;
         }
+
+        Move();
     }
 
     private void Move()
@@ -84,11 +65,13 @@ public class PlayerMovement : EntityMovement
         {
             rb.AddForce(new Vector2(0f, jumpForce));
             jumpCount--;
-            
+
+            print("JUMP");
         }
 
         // Reset the values
         isJumping = false;
+
         Animate();
         moveDirection = 0;
 

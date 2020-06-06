@@ -8,15 +8,15 @@ public class FollowPosition : MonoBehaviour
     private bool startOnTarget = true;
 
     [SerializeField]
-    private Transform targetPosition;
+    private Transform targetPosition = null;
 
     [SerializeField]
-    private float followSpeed = 0.05f;
+    private float followSpeedX = 0.05f, followSpeedY = 0.1f;
 
     private void Start()
     {
         if (startOnTarget)
-            FlyToPosition(transform.position, targetPosition.position, 60f);
+            FlyToPosition(transform.position, targetPosition.position, 60f, 60f);
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class FollowPosition : MonoBehaviour
         Vector3 _position1 = transform.position;
         Vector3 _position2 = targetPosition.position;
 
-        FlyToPosition(_position1, _position2, followSpeed);
+        FlyToPosition(_position1, _position2, followSpeedX, followSpeedY);
     }
 
     /// <summary>
@@ -34,8 +34,9 @@ public class FollowPosition : MonoBehaviour
     /// <param name="_position1">Position A</param>
     /// <param name="_position2">Position B</param>
     /// <param name="_followSpeed">Speed</param>
-    void FlyToPosition(Vector3 _position1, Vector3 _position2, float _followSpeed)
+    void FlyToPosition(Vector3 _position1, Vector3 _position2, float _followSpeedX, float _followSpeedY)
     {
-        transform.position = Vector3.Lerp(_position1, _position2, _followSpeed);
+        transform.position = transform.position.ChangeX(Mathf.Lerp(_position1.x, _position2.x, _followSpeedX));
+        transform.position = transform.position.ChangeY(Mathf.Lerp(_position1.y, _position2.y, _followSpeedY));
     }
 }
