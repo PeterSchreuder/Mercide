@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
 
                 case GameStates.Mid:
 
+                    EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Input });
+
                     break;
 
                 case GameStates.Win:

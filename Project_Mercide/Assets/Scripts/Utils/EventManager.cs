@@ -7,28 +7,37 @@ using UnityEngine.Events;
 /* -= How to use =-
 
     - Listen to an event:
-    private UnityAction testListener;
+    private Action<EventParam> testListener;
 
     // - Define
     void Awake()
     {
-        testListener = new UnityAction(TestFunction);
+        testListener = new Action<EventParam>(TestFunction);
     }
 
     // - Start listening
     void OnEnable()
     {
-        EventManager.StartListening("ClassOfSource:Test", testListener);
+        EventManager.StartListening("ClassOfSource:Test", TestFunction);
+        EventManager.StartListening("ClassOfSource:Test", TestFunction2);
     }
 
     // - Stop listening
     void OnDisable()
     {
-        EventManager.StopListening("ClassOfSource:Test", testListener);
+        EventManager.StopListening("ClassOfSource:Test", TestFunction);
+        EventManager.StopListening("ClassOfSource:Test", TestFunction2);
+    }
+
+    // - Function to use the event data
+    void TestFunction(EventParam _values)
+    {
+        
     }
 
     - Trigger an event:
-    EventManager.TriggerEvent("ClassOfSource:Test");
+    EventManager.TriggerEvent("ClassOfSource:Test");// Trigger an event
+    EventManager.TriggerEvent("ClassOfSource:Test", new EventParam { UIScreenType = UIScreenTypes.Mid });// Trigger an event and give it data
 
     -= Made possible by:
     https://learn.unity.com/tutorial/create-a-simple-messaging-system-with-events#5cf5960fedbc2a281acd21fa
