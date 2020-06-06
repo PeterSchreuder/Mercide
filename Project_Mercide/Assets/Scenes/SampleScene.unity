@@ -440,10 +440,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -554,10 +554,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -598,6 +598,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1383600032}
     m_Modifications:
+    - target: {fileID: 520291056739973780, guid: b69f3c6932d04864d95ef5a9cb038fe8,
+        type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2540776689812010650, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
       propertyPath: m_Text
@@ -663,7 +668,7 @@ PrefabInstance:
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 190
+      value: 356
       objectReference: {fileID: 0}
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
@@ -673,7 +678,7 @@ PrefabInstance:
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 128
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
@@ -830,10 +835,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2061,10 +2066,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2174,10 +2179,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2719,10 +2724,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2862,10 +2867,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -3182,7 +3187,7 @@ PrefabInstance:
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 105
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
@@ -3192,7 +3197,7 @@ PrefabInstance:
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 128
+      value: 525
       objectReference: {fileID: 0}
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
@@ -3740,12 +3745,12 @@ PrefabInstance:
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 128
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 128
+      value: 220
       objectReference: {fileID: 0}
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
@@ -4727,6 +4732,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1383600032}
     m_Modifications:
+    - target: {fileID: 520291056739973780, guid: b69f3c6932d04864d95ef5a9cb038fe8,
+        type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4795,7 +4805,7 @@ PrefabInstance:
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 128
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
