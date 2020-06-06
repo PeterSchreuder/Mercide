@@ -30,6 +30,8 @@ public class EntityMovement : MonoBehaviour
 
     protected float distToFeet;
 
+    protected float deltaTime;
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -39,6 +41,11 @@ public class EntityMovement : MonoBehaviour
     protected virtual void Start()
     {
         distToFeet = gameObject.GetComponent<Collider2D>().bounds.extents.y + 0.1f;
+    }
+
+    protected virtual void Update()
+    {
+        deltaTime = Time.deltaTime;
     }
 
     protected virtual void FixedUpdate()
