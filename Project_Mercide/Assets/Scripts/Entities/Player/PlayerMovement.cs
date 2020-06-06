@@ -63,8 +63,6 @@ public class PlayerMovement : EntityMovement
         {
             rb.AddForce(new Vector2(0f, jumpForce));
             jumpCount--;
-
-            print("JUMP");
         }
 
         // Reset the values
