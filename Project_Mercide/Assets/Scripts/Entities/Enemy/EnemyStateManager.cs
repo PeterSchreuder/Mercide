@@ -10,6 +10,8 @@ public class EnemyStateManager : MonoBehaviour
 
     private GlobalObject globalObject;
 
+    private PlayerController mainTarget = null;
+
     private AIStates aiStateCurrent;
     public AIStates AIStateCurrent
     {
@@ -136,5 +138,17 @@ public class EnemyStateManager : MonoBehaviour
             textDebugState.text = AIStateCurrent.ToString();
         else
             Debug.LogWarning("No text object found");
+    }
+
+    /// <summary>
+    /// Checks if this enemy is in the view of the target
+    /// </summary>
+    /// <returns></returns>
+    private bool TargetCheckInView()
+    {
+        bool _return = false;
+
+
+        return _return;
     }
 }
