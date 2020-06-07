@@ -49,6 +49,8 @@ public class EntityMovement : MonoBehaviour
         isGrounded = CheckIfGrounded();
     }
 
+
+
     protected bool CheckIfGrounded()
     {
         bool _return = false;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class EntityController : GlobalObject
 {
     [SerializeField]
@@ -41,6 +42,11 @@ public class EntityController : GlobalObject
     // Update is called once per frame
     protected virtual void Update()
     {
-        
+
     }
+
+
 }
+
+
+

@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AIStates { Idle, Alerted, AlertedDucked, Shooting, Charging, RePositioning };
+public enum AIStates { Idle, Alerted, AlertedDucked, Staggered, Shooting, Charging, RePositioning };
 
 public class EnemyStateManager : MonoBehaviour
 {
+    [SerializeField]
+    private TextMesh textDebugState;
+
     private AIStates aiStateCurrent;
     public AIStates AIStateCurrent
     {
@@ -16,6 +19,8 @@ public class EnemyStateManager : MonoBehaviour
             AIStatePrevious = AIStateCurrent;
             aiStateCurrent = value;
 
+            TextUpdateDebugState();
+
             switch (AIStateCurrent)
             {
                 case AIStates.Idle:// Doing nothing
@@ -25,6 +30,9 @@ public class EnemyStateManager : MonoBehaviour
 
                     break;
                 case AIStates.AlertedDucked:// Alerted but ducked
+
+                    break;
+                case AIStates.Staggered:
 
                     break;
                 case AIStates.Shooting:// Just shooting
@@ -51,17 +59,27 @@ public class EnemyStateManager : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        textDebugState = GetComponentInChildren<TextMesh>();
+    }
+
     private void FixedUpdate()
     {
         switch (AIStateCurrent)
         {
             case AIStates.Idle:// Doing nothing
 
+
+
                 break;
             case AIStates.Alerted:// In player screen
 
                 break;
             case AIStates.AlertedDucked:// Alerted but ducked
+
+                break;
+            case AIStates.Staggered:
 
                 break;
             case AIStates.Shooting:// Just shooting
@@ -91,6 +109,9 @@ public class EnemyStateManager : MonoBehaviour
             case AIStates.AlertedDucked:// Alerted but ducked
 
                 break;
+            case AIStates.Staggered:
+
+                break;
             case AIStates.Shooting:// Just shooting
 
                 break;
@@ -103,5 +124,13 @@ public class EnemyStateManager : MonoBehaviour
         }
 
         //yield return new WaitForSeconds(_timeSec);
+    }
+
+    private void TextUpdateDebugState()
+    {
+        if (textDebugState)
+            textDebugState.text = AIStateCurrent.ToString();
+        else
+            Debug.LogWarning("No text object found");
     }
 }

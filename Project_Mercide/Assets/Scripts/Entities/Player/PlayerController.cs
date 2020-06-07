@@ -11,8 +11,10 @@ public class PlayerController : EntityController
 
     private Action<EventParam> actionListener;
 
-    protected void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         actionListener = new Action<EventParam>(FireWeapon);
     }
 
