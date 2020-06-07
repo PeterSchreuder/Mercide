@@ -4,8 +4,12 @@ using UnityEngine;
 
 public enum AIStates { Idle, Alerted, AlertedDucked, Staggered, Shooting, Charging, RePositioning };
 
+public enum TargetVecticalPosition { Same, Above, Under };// If the target is above the object, bellow or at the same level
+
 public class EnemyStateManager : MonoBehaviour
 {
+    public EnemyTemplate enemyTemplate; 
+
     private TextMesh textDebugState;
 
     private GlobalObject globalObject;
@@ -91,13 +95,6 @@ public class EnemyStateManager : MonoBehaviour
 
         // Set the AI state as last
         AIStateCurrent = AIStates.Idle;
-    }
-
-    private void Start()
-    {
-        
-
-        
     }
 
     private void FixedUpdate()
@@ -243,6 +240,21 @@ public class EnemyStateManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if the target is Above the object, Bellow or at the Same level
+    /// </summary>
+    /// <returns></returns>
+    private TargetVecticalPosition TargetCheckSamePlatformLine()
+    {
+        TargetVecticalPosition _return = TargetVecticalPosition.Same;
+
+        if (mainTarget.PlatformLine > enemyController.PlatformLine)
+            _return = TargetVecticalPosition.Above;
+        else if (mainTarget.PlatformLine < enemyController.PlatformLine)
+            _return = TargetVecticalPosition.Under;
+
+        return _return;
+    }
 
     private Vector2 TargetCheckDistance(Vector2 _targetPosition)
     {
