@@ -13,6 +13,7 @@ public class EntityMovement : MonoBehaviour
 
     public Transform head;
     public Transform feet;
+    public Transform front;
     public LayerMask groundObjects;
     public float checkRadius = 0.2f;
     public int maxJumpCount = 1;
@@ -52,6 +53,7 @@ public class EntityMovement : MonoBehaviour
     {
         bool _return = false;
 
+        // If the velocity is 0 than the entity is on the ground for sure
         if (rb.velocity.y == 0)
             _return = Physics2D.OverlapCircle(feet.position, checkRadius, groundObjects);//Physics.Raycast(transform.position, -Vector3.up, -distToFeet);
 
@@ -80,5 +82,6 @@ public class EntityMovement : MonoBehaviour
     {
         Gizmos.DrawSphere(head.position, checkRadius);
         Gizmos.DrawSphere(feet.position, checkRadius);
+        Gizmos.DrawSphere(front.position, checkRadius);
     }
 }

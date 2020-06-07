@@ -31,6 +31,7 @@ MonoBehaviour:
   jumpForce: 650
   head: {fileID: 1674665904007055686}
   feet: {fileID: 1674665903434441067}
+  front: {fileID: 7222779777041833914}
   groundObjects:
     serializedVersion: 2
     m_Bits: 256
@@ -139,6 +140,12 @@ Transform:
 --- !u!4 &1674665903434441067 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6918816394644828362, guid: 0f403b7dec7bf554ab0be47ff838e55e,
+    type: 3}
+  m_PrefabInstance: {fileID: 8590907789971231137}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7222779777041833914 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1370641223247400475, guid: 0f403b7dec7bf554ab0be47ff838e55e,
     type: 3}
   m_PrefabInstance: {fileID: 8590907789971231137}
   m_PrefabAsset: {fileID: 0}
