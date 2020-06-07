@@ -42,14 +42,14 @@ public class EnemyMovement : EntityMovement
         }
     }
 
-    private void ProcessInput(EventParam _input)// int = horizontal, bool = jump
-    {
-        moveDirection = _input.Float;//Input.GetAxis("Horizontal");
-                                   //Input.GetButtonDown("Jump")
+    //private void ProcessInput(EventParam _input)// int = horizontal, bool = jump
+    //{
+    //    MoveDirection = _input.Float;//Input.GetAxis("Horizontal");
+    //                               //Input.GetButtonDown("Jump")
 
-        if (_input.Bool && jumpCount > 0)
-        {
-            isJumping = true;
-        }
-    }
+    //    if (_input.Bool && jumpCount > 0)
+    //    {
+    //        isJumping = true;
+    //    }
+    //}
 }

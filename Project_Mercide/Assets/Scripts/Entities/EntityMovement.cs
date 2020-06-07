@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnvironmentTypes { Noone, Platform, Block, Wall };
+
 public class EntityMovement : MonoBehaviour
 {
     protected enum MoveVerticalStates { Noone, Jumping, Grounded, Crouched };
-    protected MoveVerticalStates MoveVerticalStateCurrent = MoveVerticalStates.Noone;
+
+    private MoveVerticalStates moveVerticalStateCurrent = MoveVerticalStates.Noone;
+    protected MoveVerticalStates MoveVerticalStateCurrent { get => moveVerticalStateCurrent; set => moveVerticalStateCurrent = value; }
 
     //- Public
     public float moveSpeed = 400;
@@ -23,7 +27,10 @@ public class EntityMovement : MonoBehaviour
     protected int jumpCount = 0;
     protected Rigidbody2D rb;
     protected bool facingRight = true;
-    protected float moveDirection;
+
+    private float moveDirection;
+    public float MoveDirection { get => moveDirection; set => moveDirection = value; }
+
     protected bool isGrounded = false;
     protected float distToFeet;
     protected float deltaTime;
@@ -54,7 +61,7 @@ public class EntityMovement : MonoBehaviour
         rb.velocity = new Vector2((_direction * moveSpeed) * deltaTime, rb.velocity.y);
 
         Animate();
-        moveDirection = 0;
+        MoveDirection = 0;
     }
 
     public void Jump()
@@ -70,7 +77,36 @@ public class EntityMovement : MonoBehaviour
     /// Check when velocity.y == 0 if there is an platform above the entity
     /// </summary>
     /// <returns></returns>
-    public bool CheckIfAbove()
+    public EnvironmentTypes CheckIfAbove()
+    {
+        EnvironmentTypes _return = EnvironmentTypes.Noone;
+        string _check = null;
+
+        // If the velocity is 0 than the entity is on the ground for sure
+        if (rb.velocity.y == 0)
+        {
+            Collider2D[] _collision = Physics2D.OverlapCircleAll(head.position, checkRadius);
+
+            foreach (Collider2D _object in _collision)
+            {
+                _check = _object.tag;//CompareTag("Platform");
+
+                switch (_check)
+                {
+
+                }
+                    
+            }
+        }
+
+        return _return;
+    }
+
+    /// <summary>
+    /// Check if leaning against an object when isGrounded
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckFront()
     {
         bool _return = false;
 
@@ -88,6 +124,9 @@ public class EntityMovement : MonoBehaviour
             }
         }
 
+        //if (isGrounded)
+        //    _return = Physics2D.OverlapCircle(front.position, checkRadius, groundObjects);//Physics.Raycast(transform.position, -Vector3.up, -distToFeet);
+
         return _return;
     }
 
@@ -102,20 +141,6 @@ public class EntityMovement : MonoBehaviour
         // If the velocity is 0 than the entity is on the ground for sure
         if (rb.velocity.y == 0)
             _return = Physics2D.OverlapCircle(feet.position, checkRadius, groundObjects);//Physics.Raycast(transform.position, -Vector3.up, -distToFeet);
-
-        return _return;
-    }
-
-    /// <summary>
-    /// Check if leaning against an object when isGrounded
-    /// </summary>
-    /// <returns></returns>
-    public bool CheckFront()
-    {
-        bool _return = false;
-
-        if (isGrounded)
-            _return = Physics2D.OverlapCircle(front.position, checkRadius, groundObjects);//Physics.Raycast(transform.position, -Vector3.up, -distToFeet);
 
         return _return;
     }

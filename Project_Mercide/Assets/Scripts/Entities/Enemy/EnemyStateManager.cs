@@ -162,7 +162,7 @@ public class EnemyStateManager : MonoBehaviour
                 break;
             case AIStates.Shooting://===== Just shooting =====
 
-                if (TargetCheckSamePlatformLine() != TargetVecticalPosition.Same)
+                if (Mathf.Abs(TargetCheckDistance().x) >= enemyTemplate.range || TargetCheckSamePlatformLine() != TargetVecticalPosition.Same)
                     AIStateCurrent = AIStates.RePositioning;
 
                 break;
@@ -182,15 +182,19 @@ public class EnemyStateManager : MonoBehaviour
 
                         if (enemyMovement.CheckIfAbove())
                             enemyMovement.Jump();
-                        else
-                            enemyMovement.Move(TargetCheckDistance(mainTarget.transform.position).x);
+                        else// Move toward the target
+                        {
+                            enemyMovement.MoveDirection = TargetCheckDistance().x;
+                            enemyMovement.Move(enemyMovement.MoveDirection);
+                        }
+                            
 
                         break;
                     case TargetVecticalPosition.Under:
 
-                        enemyMovement.Move(TargetCheckDistance(mainTarget.transform.position).x);
-
-                        //AIStateCurrent = AIStates.RePositioning;
+                        // Move toward the target
+                        enemyMovement.MoveDirection = TargetCheckDistance().x;
+                        enemyMovement.Move(enemyMovement.MoveDirection);
 
                         break;
                 }
@@ -298,6 +302,20 @@ public class EnemyStateManager : MonoBehaviour
         return _return;
     }
 
+    /// <summary>
+    /// Returns the distance between this transform.position and the mainTarget.transform.position
+    /// </summary>
+    /// <returns></returns>
+    private Vector2 TargetCheckDistance()
+    {
+        Vector2 _targetPosition = mainTarget.transform.position;
+        return new Vector2(_targetPosition.x - transform.position.x, _targetPosition.y - transform.position.y);
+    }
+
+    /// <summary>
+    /// Returns the distance between this transform.position and a given Vector2 position
+    /// </summary>
+    /// <returns></returns>
     private Vector2 TargetCheckDistance(Vector2 _targetPosition)
     {
         return new Vector2(_targetPosition.x - transform.position.x, _targetPosition.y - transform.position.y);
