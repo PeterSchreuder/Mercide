@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EnvironmentTypes { Noone, Platform, Block, Wall };
+public enum EnvironmentTypes { Noone, Platform, Cover, Block, Wall, Floor };
 
 public class EntityMovement : MonoBehaviour
 {
@@ -56,6 +56,22 @@ public class EntityMovement : MonoBehaviour
         isGrounded = CheckIfGrounded();
     }
 
+    public virtual void MoveStop()
+    {
+        rb.velocity = new Vector2();
+
+        Animate();
+        MoveDirection = 0;
+    }
+
+    public virtual void Move()
+    {
+        rb.velocity = new Vector2((MoveDirection * moveSpeed) * deltaTime, rb.velocity.y);
+
+        Animate();
+        MoveDirection = 0;
+    }
+
     public virtual void Move(float _direction)
     {
         rb.velocity = new Vector2((_direction * moveSpeed) * deltaTime, rb.velocity.y);
@@ -79,53 +95,67 @@ public class EntityMovement : MonoBehaviour
     /// <returns></returns>
     public EnvironmentTypes CheckIfAbove()
     {
-        EnvironmentTypes _return = EnvironmentTypes.Noone;
-        string _check = null;
+        return CheckFlank(head.position);
 
-        // If the velocity is 0 than the entity is on the ground for sure
-        if (rb.velocity.y == 0)
-        {
-            Collider2D[] _collision = Physics2D.OverlapCircleAll(head.position, checkRadius);
+        //bool _return = false;
 
-            foreach (Collider2D _object in _collision)
-            {
-                _check = _object.tag;//CompareTag("Platform");
+        //// If the velocity is 0 than the entity is on the ground for sure
+        //if (rb.velocity.y == 0)
+        //{
+        //    Collider2D[] _collision = Physics2D.OverlapCircleAll(head.position, checkRadius);
 
-                switch (_check)
-                {
+        //    foreach (Collider2D _object in _collision)
+        //    {
+        //        _return = _object.CompareTag("Platform");
 
-                }
-                    
-            }
-        }
+        //        if (_return)
+        //            break;
+        //    }
+        //}
 
-        return _return;
+        //return _return;
+    }
+
+    public EnvironmentTypes CheckFront()
+    {
+        return CheckFlank(front.position);
     }
 
     /// <summary>
-    /// Check if leaning against an object when isGrounded
+    /// Checks position without compairing Strings in a switch statement (Making it much more expendable)
     /// </summary>
     /// <returns></returns>
-    public bool CheckFront()
+    public EnvironmentTypes CheckFlank(Vector2 _position)
     {
-        bool _return = false;
+        EnvironmentTypes _return = EnvironmentTypes.Noone;
 
         // If the velocity is 0 than the entity is on the ground for sure
         if (rb.velocity.y == 0)
         {
-            Collider2D[] _collision = Physics2D.OverlapCircleAll(head.position, checkRadius);
+            Collider2D[] _collision = Physics2D.OverlapCircleAll(_position, checkRadius);
 
+            // Get the length of the EnvironmentTypes enum
+            int _enumLength = System.Enum.GetValues(typeof(EnvironmentTypes)).Length;
+            EnvironmentTypes _index;// Index in the enum to be turned to a String
+
+            // Go through all the collided objects
             foreach (Collider2D _object in _collision)
             {
-                _return = _object.CompareTag("Platform");
+                // Loop through the EnvironmentTypes enum
+                for (int i = 0; i < _enumLength; i++)
+                {
+                    _index = (EnvironmentTypes)i;// Typecast it to an Int
 
-                if (_return)
-                    break;
+                    // Compare the _object tag to the EnvironmentTypes enum name
+                    if (_object.tag == _index.ToString())
+                    {
+                        // Return the enum of the collided object
+                        _return = (EnvironmentTypes)i;
+                        break;
+                    }
+                }
             }
         }
-
-        //if (isGrounded)
-        //    _return = Physics2D.OverlapCircle(front.position, checkRadius, groundObjects);//Physics.Raycast(transform.position, -Vector3.up, -distToFeet);
 
         return _return;
     }

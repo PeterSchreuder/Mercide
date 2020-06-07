@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 100
-  jumpForce: 300
+  jumpForce: 650
   head: {fileID: 460376641208524832}
   feet: {fileID: 460376641784809485}
   front: {fileID: 8458457369127925468}

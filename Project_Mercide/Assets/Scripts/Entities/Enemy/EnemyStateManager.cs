@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AIStates { Idle, Alerted, AlertedDucked, Staggered, Shooting, Charging, RePositioning };
+public enum AIStates { Idle, Alerted, AlertedDucked, Staggered, Shooting, CloseDistance, Charging, RePositioning };
 
 public enum TargetVecticalPosition { Same, Above, Under };// If the target is above the object, bellow or at the same level
 
@@ -50,10 +50,16 @@ public class EnemyStateManager : MonoBehaviour
                 case AIStates.AlertedDucked:// Alerted but ducked
 
                     break;
-                case AIStates.Staggered:
+                case AIStates.Staggered:// Hit by target(s)
 
                     break;
                 case AIStates.Shooting:// Just shooting
+
+                    // Stop moving while shooting
+                    enemyMovement.MoveStop();
+
+                    break;
+                case AIStates.CloseDistance:// If while shooting the is out of range
 
                     break;
                 case AIStates.Charging:// Running at the player
@@ -117,7 +123,7 @@ public class EnemyStateManager : MonoBehaviour
                     break;
                 }
 
-                if (enemyMovement.CheckFront())
+                if (enemyMovement.CheckFront() == EnvironmentTypes.Cover)
                 {
                     AIStateCurrent = AIStates.AlertedDucked;
                     break;
@@ -162,8 +168,36 @@ public class EnemyStateManager : MonoBehaviour
                 break;
             case AIStates.Shooting://===== Just shooting =====
 
-                if (Mathf.Abs(TargetCheckDistance().x) >= enemyTemplate.range || TargetCheckSamePlatformLine() != TargetVecticalPosition.Same)
+                if (Mathf.Abs(TargetCheckDistance().x) >= enemyTemplate.range)
+                {
+                    AIStateCurrent = AIStates.CloseDistance;
+                    break;
+                }
+
+                if (TargetCheckSamePlatformLine() != TargetVecticalPosition.Same)
+                {
                     AIStateCurrent = AIStates.RePositioning;
+                    break;
+                }
+
+                break;
+            case AIStates.CloseDistance://===== If while shooting the is out of range =====
+
+                if (TargetCheckSamePlatformLine() != TargetVecticalPosition.Same)
+                {
+                    AIStateCurrent = AIStates.RePositioning;
+                    break;
+                }
+
+                if (Mathf.Abs(TargetCheckDistance().x) > enemyTemplate.range - 2f)
+                {
+                    enemyMovement.MoveDirection = TargetCheckDistance().x;
+                    enemyMovement.Move();
+                }
+                else
+                {
+                    AIStateCurrent = AIStatePrevious;
+                }
 
                 break;
             case AIStates.Charging://===== Running at the player =====
@@ -180,12 +214,23 @@ public class EnemyStateManager : MonoBehaviour
                         break;
                     case TargetVecticalPosition.Above:
 
-                        if (enemyMovement.CheckIfAbove())
+                        //print(enemyMovement.CheckIfAbove().ToString());
+
+                        if (enemyMovement.CheckIfAbove() == EnvironmentTypes.Platform)
+                        {
                             enemyMovement.Jump();
+                            //print("Jump");
+                        }
                         else// Move toward the target
                         {
                             enemyMovement.MoveDirection = TargetCheckDistance().x;
-                            enemyMovement.Move(enemyMovement.MoveDirection);
+                            enemyMovement.Move();
+
+                            if (enemyMovement.CheckFront() == EnvironmentTypes.Cover)
+                            {
+                                enemyMovement.Jump();
+                                //print("Jump the Cover");
+                            }
                         }
                             
 
@@ -242,7 +287,7 @@ public class EnemyStateManager : MonoBehaviour
     private void TextUpdateDebugState()
     {
         if (textDebugState)
-            textDebugState.text = AIStateCurrent.ToString();
+            textDebugState.text = AIStateCurrent.ToString() + "\n" + AIStatePrevious.ToString();
         else
             Debug.LogWarning("No text object found");
     }

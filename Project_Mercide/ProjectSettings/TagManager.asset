@@ -9,6 +9,8 @@ TagManager:
   - Platform
   - Block
   - Cover
+  - Wall
+  - Floor
   layers:
   - Default
   - TransparentFX
