@@ -28,10 +28,12 @@ public class EntityController : GlobalObject
 
         if (_amount > 0)// Increase
         {
-
+            EventManager.TriggerEvent("Entity" + gameObject.tag + ":GotHealth");
         }
         else// Decrease
         {
+            EventManager.TriggerEvent("Entity" + gameObject.tag + ":GotDamage");// If Player: red screen flash, if Enemy: Hitmarker sound
+
             if (Health <= 0)
             {
                 Die();
@@ -44,8 +46,6 @@ public class EntityController : GlobalObject
     {
 
     }
-
-
 }
 
 

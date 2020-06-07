@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4348343414772978382}
   - component: {fileID: 6458417352817129825}
   - component: {fileID: 4764588066603198645}
+  - component: {fileID: 565548252008963051}
   m_Layer: 9
   m_Name: Text Debug State
   m_TagString: Untagged
@@ -93,6 +94,40 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4294967295
+--- !u!114 &565548252008963051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782861412100037876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aacc0bced940ec40be3d64d6d6dcb4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2260236386047756280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 460376642138971245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a13e0ac791e7a469383ec88d41eb55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 400
+  jumpForce: 650
+  head: {fileID: 460376641208524832}
+  feet: {fileID: 460376641784809485}
+  front: {fileID: 8458457369127925468}
+  groundObjects:
+    serializedVersion: 2
+    m_Bits: 256
+  checkRadius: 0.2
+  maxJumpCount: 1
 --- !u!114 &4077340616954535459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,28 +157,6 @@ MonoBehaviour:
   platformLineInAir: 0
   holster: {fileID: 460376641130007552}
   playerIndex: 0
---- !u!114 &2260236386047756280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 460376642138971245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3a13e0ac791e7a469383ec88d41eb55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 400
-  jumpForce: 650
-  head: {fileID: 460376641208524832}
-  feet: {fileID: 460376641784809485}
-  front: {fileID: 8458457369127925468}
-  groundObjects:
-    serializedVersion: 2
-    m_Bits: 256
-  checkRadius: 0.2
-  maxJumpCount: 1
 --- !u!1001 &7378871770042644679
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -155,6 +168,31 @@ PrefabInstance:
         type: 3}
       propertyPath: teamNumber
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6341292636349673928, guid: 0f403b7dec7bf554ab0be47ff838e55e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6419518725839484407, guid: 0f403b7dec7bf554ab0be47ff838e55e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918816392625299580, guid: 0f403b7dec7bf554ab0be47ff838e55e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918816392648963268, guid: 0f403b7dec7bf554ab0be47ff838e55e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918816392974759317, guid: 0f403b7dec7bf554ab0be47ff838e55e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6918816392974759319, guid: 0f403b7dec7bf554ab0be47ff838e55e,
         type: 3}
@@ -170,6 +208,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918816392994330854, guid: 0f403b7dec7bf554ab0be47ff838e55e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 6918816393640551588, guid: 0f403b7dec7bf554ab0be47ff838e55e,
         type: 3}
@@ -235,6 +278,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918816393640551594, guid: 0f403b7dec7bf554ab0be47ff838e55e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 6918816394644828361, guid: 0f403b7dec7bf554ab0be47ff838e55e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5011327014350581480, guid: 0f403b7dec7bf554ab0be47ff838e55e, type: 3}

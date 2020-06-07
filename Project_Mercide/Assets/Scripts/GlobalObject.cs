@@ -8,6 +8,9 @@ public class GlobalObject : MonoBehaviour
     private int teamNumber;
     public int TeamNumber { get => teamNumber; set => teamNumber = value; }
 
+    private int objectId;
+    public int ObjectId { get => objectId; set => objectId = value; }
+
     private float health;
     public float Health { get => health; set => health = value; }
 

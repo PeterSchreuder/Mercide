@@ -85,7 +85,7 @@ public class EntityMovement : MonoBehaviour
     /// <param name="_rightSide">true = right, false = left</param>
     public void FlipCharacter(bool _rightSide)
     {
-        print(facingRight.ToString() + " == " + _rightSide.ToString());
+        //print(facingRight.ToString() + " == " + _rightSide.ToString());
 
         if (facingRight.Equals(_rightSide))
             return;
