@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
 
                     GameStateCurrent = GameStates.Mid;
 
-                    if (DebugEnabled)
+                    if (DebugEnabled || Debug.isDebugBuild)
                         EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Debug });
 
                     EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Mid });
@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        Application.targetFrameRate = 60;
+
         GameStateCurrent = GameStates.Begin;
     }
 

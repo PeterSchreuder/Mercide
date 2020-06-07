@@ -11,7 +11,7 @@ public class FollowPosition : MonoBehaviour
     private Transform targetPosition = null;
 
     [SerializeField]
-    private float followSpeedX = 0.05f, followSpeedY = 0.1f;
+    private float followSpeedX = 2f, followSpeedY = 1f;
 
     private void Start()
     {
@@ -25,7 +25,7 @@ public class FollowPosition : MonoBehaviour
         Vector3 _position1 = transform.position;
         Vector3 _position2 = targetPosition.position;
 
-        FlyToPosition(_position1, _position2, followSpeedX, followSpeedY);
+        FlyToPosition(_position1, _position2, followSpeedX * Time.deltaTime, followSpeedY * Time.deltaTime);
     }
 
     /// <summary>

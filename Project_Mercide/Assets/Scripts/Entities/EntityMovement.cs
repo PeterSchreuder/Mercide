@@ -8,7 +8,7 @@ public class EntityMovement : MonoBehaviour
     protected MoveVerticalStates MoveVerticalStateCurrent = MoveVerticalStates.Noone;
 
     //- Public
-    public float moveSpeed = 5;
+    public float moveSpeed = 400;
     public float jumpForce = 650;
 
     public Transform head;
