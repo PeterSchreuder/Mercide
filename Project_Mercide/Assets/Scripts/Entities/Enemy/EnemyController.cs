@@ -30,6 +30,31 @@ public class EnemyController : EntityController
         //EventManager.StopListening("InputManager:Actions", FireWeapon);
     }
 
+    /// <summary>
+    /// Increase or Decrease health
+    /// </summary>
+    public override void HealthAdd(float _amount)
+    {
+        Health += _amount;
+
+        Health = Mathf.Clamp(Health, 0, 100);
+
+        if (_amount > 0)// Increase
+        {
+            EventManager.TriggerEvent("Entity" + gameObject.tag + ":GotHealth");
+        }
+        else// Decrease
+        {
+            EventManager.TriggerEvent("Entity" + gameObject.tag + ":GotDamage");// If Player: red screen flash, if Enemy: Hitmarker sound
+            //GetComponent<EnemyStateManager>().AIStateCurrent = AIStates.Staggered;
+
+            if (Health <= 0)
+            {
+                Die();
+            }
+        }
+    }
+
     protected void FireWeapon(EventParam _input)
     {
         if (_input.Bool)

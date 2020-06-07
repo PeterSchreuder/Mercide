@@ -24,8 +24,6 @@ public class EnemyStateManager : MonoBehaviour
     private bool crIsRunning = false;// if the Coroutine is running
 
     // Data
-    private float staggerTime;
-    //private float actionTime = 5f;
 
     private AIStates aiStateCurrent;
     public AIStates AIStateCurrent
@@ -117,6 +115,13 @@ public class EnemyStateManager : MonoBehaviour
                 break;
             case AIStates.Alerted://===== In player's screen =====
 
+                if (AIStatePrevious == AIStates.Staggered)
+                {
+                    AIStateCurrent = AIStates.RePositioning;
+                    TargetLookTowardMainTarget();
+                    break;
+                }
+
                 if (!TargetCheckInView())// If no targets are in view
                 {
                     AIStateCurrent = AIStates.Idle;
@@ -165,8 +170,13 @@ public class EnemyStateManager : MonoBehaviour
                 break;
             case AIStates.Staggered://===== Hit by player =====
 
+                if (!crIsRunning)
+                    StartCoroutine(WaitForAction(AIStates.Staggered, enemyTemplate.staggerTime));
+
                 break;
             case AIStates.Shooting://===== Just shooting =====
+
+                TargetLookTowardMainTarget();
 
                 if (Mathf.Abs(TargetCheckDistance().x) >= enemyTemplate.range)
                 {
@@ -266,6 +276,11 @@ public class EnemyStateManager : MonoBehaviour
 
                 break;
             case AIStates.Staggered:
+
+                if (AIStatePrevious == AIStates.Idle)
+                    AIStateCurrent = AIStates.Alerted;
+                else
+                    AIStateCurrent = AIStatePrevious;
 
                 break;
             case AIStates.Shooting:// Just shooting
