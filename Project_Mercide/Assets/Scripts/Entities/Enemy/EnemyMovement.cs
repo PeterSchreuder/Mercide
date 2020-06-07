@@ -5,24 +5,24 @@ using UnityEngine;
 
 public class EnemyMovement : EntityMovement
 {
-    private Action<EventParam> inputListener;
+    //private Action<EventParam> inputListener;
 
     protected override void Awake()
     {
         base.Awake();
 
-        inputListener = new Action<EventParam>(ProcessInput);
+        //inputListener = new Action<EventParam>(ProcessInput);
     }
 
     void OnEnable()
     {
-        EventManager.StartListening("InputManager:Input", ProcessInput);
+        //EventManager.StartListening("InputManager:Input", ProcessInput);
     }
 
     // - Stop listening
     void OnDisable()
     {
-        EventManager.StopListening("ClassOfSource:Input", ProcessInput);
+        //EventManager.StopListening("ClassOfSource:Input", ProcessInput);
     }
 
     protected override void Start()
@@ -70,8 +70,5 @@ public class EnemyMovement : EntityMovement
 
         Animate();
         moveDirection = 0;
-
     }
-
-    
 }

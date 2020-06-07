@@ -50,8 +50,11 @@ public class EntityMovement : MonoBehaviour
     }
 
 
-
-    protected bool CheckIfGrounded()
+    /// <summary>
+    /// Check when velocity.y == 0 if the object is grounded
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfGrounded()
     {
         bool _return = false;
 
@@ -62,21 +65,49 @@ public class EntityMovement : MonoBehaviour
         return _return;
     }
 
-    protected void FlipCharacter()
+    /// <summary>
+    /// Check if leaning against an object when isGrounded
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckFront()
     {
-        facingRight = !facingRight;
-        transform.Rotate(0f, 180f, 0f);
+        bool _return = false;
+
+        if (isGrounded)
+            _return = Physics2D.OverlapCircle(front.position, checkRadius, groundObjects);//Physics.Raycast(transform.position, -Vector3.up, -distToFeet);
+
+        return _return;
     }
 
-    protected virtual void Animate()
+    /// <summary>
+    /// Rotates the character around the Y axes
+    /// </summary>
+    /// <param name="_rightSide">true = right, false = left</param>
+    public void FlipCharacter(bool _rightSide)
     {
-        if (moveDirection > 0 && !facingRight)
+        print(facingRight.ToString() + " == " + _rightSide.ToString());
+
+        if (facingRight.Equals(_rightSide))
+            return;
+
+        facingRight = _rightSide;
+
+        float rotation = transform.eulerAngles.y.Round();
+
+        // Only rotate if the angle is different
+        //if (rotation != 180f * _rightSide.ToFloat())
+            transform.Rotate(0f, 180f * _rightSide.ToFloat(), 0f);
+    }
+
+    public virtual void Animate()
+    {
+        if (moveDirection > 0 && !facingRight)// Left to Right
         {
-            FlipCharacter();
+            FlipCharacter(true);
         }
-        else if (moveDirection < 0 && facingRight)
+        else if (moveDirection < 0 && facingRight)// Right to Left
         {
-            FlipCharacter();
+            FlipCharacter(false);
         }
     }
 

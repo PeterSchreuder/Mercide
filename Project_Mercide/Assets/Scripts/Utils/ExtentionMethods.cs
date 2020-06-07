@@ -82,5 +82,20 @@ public static class ExtentionMethods
 
         return _return;
     }
+
+    /// <summary>
+    /// Extend from bool
+    /// </summary>
+    /// <param name="_value"></param>
+    /// <returns>false = 0f, true = 1f</returns>
+    public static float ToFloat(this bool _value)
+    {
+        float _return = -1f;
+
+        if (_value)
+            _return = 1f;
+
+        return _return;
+    }
 }
 
