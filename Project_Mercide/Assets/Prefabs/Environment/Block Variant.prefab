@@ -10,7 +10,17 @@ PrefabInstance:
     - target: {fileID: 6019670813139149725, guid: c18727f247295d94c86ee8e0aad597b1,
         type: 3}
       propertyPath: m_Name
-      value: Block Variant
+      value: Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 6019670813139149725, guid: c18727f247295d94c86ee8e0aad597b1,
+        type: 3}
+      propertyPath: m_TagString
+      value: Block
+      objectReference: {fileID: 0}
+    - target: {fileID: 6019670813139149725, guid: c18727f247295d94c86ee8e0aad597b1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 6019670813139149726, guid: c18727f247295d94c86ee8e0aad597b1,
         type: 3}
@@ -76,6 +86,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_UsedByEffector
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6019670813139149727, guid: c18727f247295d94c86ee8e0aad597b1,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6019670813139149727, guid: c18727f247295d94c86ee8e0aad597b1,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6019670813139149729, guid: c18727f247295d94c86ee8e0aad597b1, type: 3}

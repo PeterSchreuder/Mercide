@@ -40,8 +40,6 @@ public class EnemyMovement : EntityMovement
         {
             jumpCount = maxJumpCount;
         }
-
-        Move();
     }
 
     private void ProcessInput(EventParam _input)// int = horizontal, bool = jump
@@ -53,22 +51,5 @@ public class EnemyMovement : EntityMovement
         {
             isJumping = true;
         }
-    }
-
-    private void Move()
-    {
-        rb.velocity = new Vector2((moveDirection * moveSpeed) * deltaTime, rb.velocity.y);
-
-        if (isJumping && jumpCount > 0)
-        {
-            rb.AddForce(new Vector2(0f, jumpForce));
-            jumpCount--;
-        }
-
-        // Reset the values
-        isJumping = false;
-
-        Animate();
-        moveDirection = 0;
     }
 }

@@ -41,7 +41,7 @@ public class PlayerMovement : EntityMovement
             jumpCount = maxJumpCount;
         }
 
-        Move();
+        Move(moveDirection);
     }
 
     private void ProcessInput(EventParam _input)// int = horizontal, bool = jump
@@ -55,22 +55,18 @@ public class PlayerMovement : EntityMovement
         }
     }
 
-    private void Move()
+    public override void Move(float _direction)
     {
         rb.velocity = new Vector2((moveDirection * moveSpeed) * deltaTime, rb.velocity.y);
 
-        if (isJumping && jumpCount > 0)
-        {
-            rb.AddForce(new Vector2(0f, jumpForce));
-            jumpCount--;
-        }
+        if (isJumping)
+            Jump();
 
         // Reset the values
         isJumping = false;
 
         Animate();
         moveDirection = 0;
-
     }
 
     

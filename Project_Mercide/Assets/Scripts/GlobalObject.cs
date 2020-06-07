@@ -58,7 +58,7 @@ public class GlobalObject : MonoBehaviour
         {
             if (rb.velocity.y == 0)
             {
-                PlatformLineInAir = UpdatePlatformLine();
+                PlatformLine = UpdatePlatformLine();
             }
         }
     }

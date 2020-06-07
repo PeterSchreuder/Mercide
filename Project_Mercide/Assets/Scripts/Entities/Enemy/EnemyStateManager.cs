@@ -77,8 +77,6 @@ public class EnemyStateManager : MonoBehaviour
         }
     }
 
-    
-
     private void Awake()
     {
         // Get the components
@@ -91,7 +89,6 @@ public class EnemyStateManager : MonoBehaviour
 
         // Update the target list
         TargetUpdateList();
-        //mainTarget = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
         // Set the AI state as last
         AIStateCurrent = AIStates.Idle;
@@ -101,7 +98,7 @@ public class EnemyStateManager : MonoBehaviour
     {
         switch (AIStateCurrent)
         {
-            case AIStates.Idle:// Doing nothing
+            case AIStates.Idle://===== Doing nothing =====
 
                 mainTarget = TargetCheckInView();
 
@@ -112,7 +109,7 @@ public class EnemyStateManager : MonoBehaviour
                 }
 
                 break;
-            case AIStates.Alerted:// In player screen
+            case AIStates.Alerted://===== In player's screen =====
 
                 if (!TargetCheckInView())// If no targets are in view
                 {
@@ -128,8 +125,28 @@ public class EnemyStateManager : MonoBehaviour
 
                 TargetLookTowardMainTarget();
 
+
+                switch (TargetCheckSamePlatformLine())
+                {
+                    case TargetVecticalPosition.Same:
+
+                        AIStateCurrent = AIStates.Shooting;
+
+                        break;
+                    case TargetVecticalPosition.Above:
+
+                        AIStateCurrent = AIStates.RePositioning;
+
+                        break;
+                    case TargetVecticalPosition.Under:
+
+                        AIStateCurrent = AIStates.RePositioning;
+
+                        break;
+                }
+
                 break;
-            case AIStates.AlertedDucked:// Alerted but ducked
+            case AIStates.AlertedDucked://===== Alerted but ducked =====
 
                 if (!TargetCheckInView())
                 {
@@ -137,24 +154,46 @@ public class EnemyStateManager : MonoBehaviour
                     break;
                 }
 
-                // If not standing in front of something, go back to the previous state
-                if (!enemyMovement.CheckFront())
+                // TODO: Choose to run or shoot after some time
+
+                break;
+            case AIStates.Staggered://===== Hit by player =====
+
+                break;
+            case AIStates.Shooting://===== Just shooting =====
+
+                if (TargetCheckSamePlatformLine() != TargetVecticalPosition.Same)
+                    AIStateCurrent = AIStates.RePositioning;
+
+                break;
+            case AIStates.Charging://===== Running at the player =====
+
+                break;
+            case AIStates.RePositioning://===== Moving to another (better point) =====
+
+                switch (TargetCheckSamePlatformLine())
                 {
-                    AIStateCurrent = AIStatePrevious;
-                    break;
+                    case TargetVecticalPosition.Same:// If the same go back to the AIStatePrevious
+
+                        AIStateCurrent = AIStatePrevious;
+
+                        break;
+                    case TargetVecticalPosition.Above:
+
+                        if (enemyMovement.CheckIfAbove())
+                            enemyMovement.Jump();
+                        else
+                            enemyMovement.Move(TargetCheckDistance(mainTarget.transform.position).x);
+
+                        break;
+                    case TargetVecticalPosition.Under:
+
+                        enemyMovement.Move(TargetCheckDistance(mainTarget.transform.position).x);
+
+                        //AIStateCurrent = AIStates.RePositioning;
+
+                        break;
                 }
-
-                break;
-            case AIStates.Staggered:
-
-                break;
-            case AIStates.Shooting:// Just shooting
-
-                break;
-            case AIStates.Charging:// Running at the player
-
-                break;
-            case AIStates.RePositioning:// Moving to another (better point)
 
                 break;
         }
@@ -223,6 +262,9 @@ public class EnemyStateManager : MonoBehaviour
         return _return;
     }
 
+    /// <summary>
+    /// Flips the object toward the mainTarget
+    /// </summary>
     private void TargetLookTowardMainTarget()
     {
         if (!mainTarget)

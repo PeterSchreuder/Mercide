@@ -49,6 +49,47 @@ public class EntityMovement : MonoBehaviour
         isGrounded = CheckIfGrounded();
     }
 
+    public virtual void Move(float _direction)
+    {
+        rb.velocity = new Vector2((_direction * moveSpeed) * deltaTime, rb.velocity.y);
+
+        Animate();
+        moveDirection = 0;
+    }
+
+    public void Jump()
+    {
+        if (jumpCount > 0)
+        {
+            rb.AddForce(new Vector2(0f, jumpForce));
+            jumpCount--;
+        }
+    }
+
+    /// <summary>
+    /// Check when velocity.y == 0 if there is an platform above the entity
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckIfAbove()
+    {
+        bool _return = false;
+
+        // If the velocity is 0 than the entity is on the ground for sure
+        if (rb.velocity.y == 0)
+        {
+            Collider2D[] _collision = Physics2D.OverlapCircleAll(head.position, checkRadius);
+
+            foreach (Collider2D _object in _collision)
+            {
+                _return = _object.CompareTag("Platform");
+
+                if (_return)
+                    break;
+            }
+        }
+
+        return _return;
+    }
 
     /// <summary>
     /// Check when velocity.y == 0 if the object is grounded
