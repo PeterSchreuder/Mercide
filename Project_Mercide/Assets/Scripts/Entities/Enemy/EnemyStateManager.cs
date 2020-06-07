@@ -6,8 +6,9 @@ public enum AIStates { Idle, Alerted, AlertedDucked, Staggered, Shooting, Chargi
 
 public class EnemyStateManager : MonoBehaviour
 {
-    [SerializeField]
     private TextMesh textDebugState;
+
+    private GlobalObject globalObject;
 
     private AIStates aiStateCurrent;
     public AIStates AIStateCurrent
@@ -61,7 +62,10 @@ public class EnemyStateManager : MonoBehaviour
 
     private void Awake()
     {
+        // Get the components
         textDebugState = GetComponentInChildren<TextMesh>();
+
+        globalObject = GetComponent<GlobalObject>();
     }
 
     private void FixedUpdate()

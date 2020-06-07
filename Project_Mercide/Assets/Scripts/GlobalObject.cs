@@ -13,7 +13,11 @@ public class GlobalObject : MonoBehaviour
 
     [SerializeField]
     private int platformLine;
-    public int Platformline { get => platformLine; set => platformLine = value; }
+    public int PlatformLine { get => platformLine; set => platformLine = value; }
+
+    [SerializeField]
+    private int platformLineInAir;
+    public int PlatformLineInAir { get => platformLineInAir; set => platformLineInAir = value; }
 
     protected float deltaTime;
     protected Rigidbody2D rb;
@@ -32,9 +36,9 @@ public class GlobalObject : MonoBehaviour
     {
         deltaTime = Time.deltaTime;
 
-        // If not grounded. Update the platform line
-        //if (rb.velocity.y != 0)
-            UpdatePlatformLineGrounded();
+        // Update the PlatformLine variables
+        UpdatePlatformLine();
+        UpdatePlatformLineGrounded();
     }
 
     public virtual void Die()
@@ -42,23 +46,37 @@ public class GlobalObject : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Updates the PlatformLine when grouded
+    /// <summary>
+    /// Updates PlatformLine only when velocity.y == 0
+    /// </summary>
     void UpdatePlatformLineGrounded()
     {
         if (rb)
         {
             if (rb.velocity.y == 0)
             {
-                for (int i = 0; i < 4; i++)
-                {
-                    if (transform.position.y >= i * 4.5)
-                        Platformline = i;
-                    else
-                        break;
-                }
+                PlatformLineInAir = UpdatePlatformLine();
             }
         }
-        else
-            Debug.LogError("No rigidbody found");
+    }
+
+    /// <summary>
+    /// Updates the PlatformLineInAir
+    /// </summary>
+    /// <returns>PlatformLineInAir</returns>
+    int UpdatePlatformLine()
+    {
+        if (rb)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (transform.position.y >= (i * 4f) + 0.5f)
+                    PlatformLineInAir = i;
+                else
+                    break;
+            }
+        }
+
+        return PlatformLineInAir;
     }
 }
