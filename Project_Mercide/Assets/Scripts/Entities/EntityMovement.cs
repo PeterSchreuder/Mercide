@@ -14,7 +14,7 @@ public class EntityMovement : MonoBehaviour
     public Transform head;
     public Transform feet;
     public LayerMask groundObjects;
-    public float checkRadius;
+    public float checkRadius = 0.2f;
     public int maxJumpCount = 1;
 
     //- Protected
