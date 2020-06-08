@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private bool debugEnabled = true;
     public bool DebugEnabled { get => debugEnabled; set => debugEnabled = value; }
 
+    private bool crIsRunning = false;
 
     private GameStates gameStateCurrent;
     public GameStates GameStateCurrent
@@ -26,20 +27,26 @@ public class GameManager : MonoBehaviour
             {
                 case GameStates.Begin:// At the beginning of the game (When restarted)
 
+                    EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Begin });
+
                     // Setup the game
-
-                    GameStateCurrent = GameStates.Mid;
-
                     if (DebugEnabled || Debug.isDebugBuild)
                         EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Debug });
 
-                    EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Mid });
-                    EventManager.TriggerEvent("UIScreen:Close", new EventParam { UIScreenType = UIScreenTypes.Begin });
+                    
+
+                    if (!crIsRunning)
+                        StartCoroutine(WaitAfterState(GameStates.Begin, 2f));
+
+                    //GameStateCurrent = GameStates.Mid;
 
                     break;
 
                 case GameStates.Mid:
 
+                    EventManager.TriggerEvent("UIScreen:Close", new EventParam { UIScreenType = UIScreenTypes.Begin });
+
+                    EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Mid });
                     EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Input });
 
                     break;
@@ -94,5 +101,38 @@ public class GameManager : MonoBehaviour
 
                 break;
         }
+    }
+
+    /// <summary>
+    /// Wait after this state to run the code in the current state
+    /// </summary>
+    /// <param name="_state">Current state</param>
+    /// <param name="_timeSec">Secconds to wait</param>
+    /// <returns></returns>
+    private IEnumerator WaitAfterState(GameStates _state, float _timeSec)
+    {
+        crIsRunning = true;
+
+        yield return new WaitForSeconds(_timeSec);
+
+        switch (_state)
+        {
+            case GameStates.Begin:
+
+                GameStateCurrent = GameStates.Mid;
+
+                break;
+            case GameStates.Mid:
+
+                break;
+            case GameStates.Win:
+
+                break;
+            case GameStates.Lose:
+
+                break;
+        }
+
+        crIsRunning = false;
     }
 }
