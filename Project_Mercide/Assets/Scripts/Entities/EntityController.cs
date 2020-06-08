@@ -15,6 +15,8 @@ public class EntityController : GlobalObject
         base.Start();
 
         holster.TeamNumber = TeamNumber;
+
+        HealthAdd(100f);
     }
 
     /// <summary>
@@ -26,13 +28,15 @@ public class EntityController : GlobalObject
 
         Health = Mathf.Clamp(Health, 0, 100);
 
+        EventParam _newHealthAmount = new EventParam { Float = Health };
+
         if (_amount > 0)// Increase
         {
-            EventManager.TriggerEvent("Entity" + gameObject.tag + ":GotHealth");
+            EventManager.TriggerEvent("Entity" + gameObject.tag + ":GotHealth", _newHealthAmount);
         }
         else// Decrease
         {
-            EventManager.TriggerEvent("Entity" + gameObject.tag + ":GotDamage");// If Player: red screen flash, if Enemy: Hitmarker sound
+            EventManager.TriggerEvent("Entity" + gameObject.tag + ":GotDamage", _newHealthAmount);// If Player: red screen flash, if Enemy: Hitmarker sound
 
             if (Health <= 0)
             {

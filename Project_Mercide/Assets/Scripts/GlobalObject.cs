@@ -12,7 +12,16 @@ public class GlobalObject : MonoBehaviour
     public int ObjectId { get => objectId; set => objectId = value; }
 
     private float health;
-    public float Health { get => health; set => health = value; }
+    public float Health
+    {
+        get => health;
+        set
+        {
+            // Fire an event that the object lost health
+            EventManager.TriggerEvent("Entity" + gameObject.tag + ":UpdateHealth", new EventParam { Float = Health });
+            health = value;
+        }
+    }
 
     [SerializeField]
     private int platformLine;
@@ -46,6 +55,8 @@ public class GlobalObject : MonoBehaviour
 
     public virtual void Die()
     {
+        print("Entity" + gameObject.tag + ":Died");
+        EventManager.TriggerEvent("Entity" + gameObject.tag + ":Died", new EventParam { Float = 100 });
         Destroy(gameObject);
     }
 

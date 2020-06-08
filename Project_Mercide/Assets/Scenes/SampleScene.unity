@@ -543,6 +543,49 @@ Canvas:
   m_SortingLayerID: -195905503
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!1 &243602094
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 243602095}
+  - component: {fileID: 243602096}
+  m_Layer: 0
+  m_Name: GameScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &243602095
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243602094}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1561790865}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &243602096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 243602094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73221cdb41c204040a494bcd191815c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &270648478 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 821525234549708185, guid: 1520b936060c87d4f9f9d6f766b620b7,
@@ -798,6 +841,7 @@ GameObject:
   - component: {fileID: 347436024}
   - component: {fileID: 347436023}
   - component: {fileID: 347436022}
+  - component: {fileID: 347436026}
   m_Layer: 5
   m_Name: Screen - Mid
   m_TagString: Untagged
@@ -900,6 +944,20 @@ Canvas:
   m_SortingLayerID: -195905503
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &347436026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347436020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b60cb6481e0a7e4fb3a945d52c5fee1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 1135190489}
+  score: {fileID: 2107376650}
 --- !u!1001 &349374186
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2431,7 +2489,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Health: 100
+  m_Text: 'Health: ---
 
 '
 --- !u!222 &1135190490
@@ -3967,6 +4025,7 @@ Transform:
   - {fileID: 1029527088}
   - {fileID: 1783899978}
   - {fileID: 2145932703}
+  - {fileID: 243602095}
   m_Father: {fileID: 928536354}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4413,7 +4472,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1724328650}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19, y: 1.5, z: 0}
+  m_LocalPosition: {x: 14, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1687258585}
@@ -4669,7 +4728,7 @@ PrefabInstance:
     - target: {fileID: 2540776689812010650, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
       propertyPath: m_Color.a
-      value: 0.5019608
+      value: 0.6666667
       objectReference: {fileID: 0}
     - target: {fileID: 3552523031956959006, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
@@ -4754,7 +4813,7 @@ PrefabInstance:
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 220
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 4151255075306197344, guid: b69f3c6932d04864d95ef5a9cb038fe8,
         type: 3}
@@ -4826,6 +4885,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 8668287105140526474, guid: b69f3c6932d04864d95ef5a9cb038fe8,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b69f3c6932d04864d95ef5a9cb038fe8, type: 3}
 --- !u!224 &1824929888 stripped
@@ -5756,7 +5820,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: '1000 :Score
+  m_Text: '--- :Score
 
 '
 --- !u!222 &2107376651
@@ -6324,6 +6388,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7006502170241364961, guid: c41fddd7a3c925a4a8514efebc60601c,
+        type: 3}
+      propertyPath: jumpForce
+      value: 700
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c41fddd7a3c925a4a8514efebc60601c, type: 3}
