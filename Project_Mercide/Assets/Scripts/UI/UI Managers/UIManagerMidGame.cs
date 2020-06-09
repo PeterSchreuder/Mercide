@@ -61,10 +61,18 @@ public class UIManagerMidGame : UIManager
 
     void FeedbackShowHitFlash(EventParam _data)
     {
-        Color _tempColor = hitFlashScreen.color;
-        _tempColor.a = 1f;
+        print(1);
 
-        hitFlashScreen.color = _tempColor;
+        //Color _tempColor = hitFlashScreen.color;
+        //_tempColor.a = 1f;
+
+        //hitFlashScreen.color = _tempColor;
+
+        //hitFlashScreen.CrossFadeAlpha(0f, 1f, false);
+
+        //iTween.ColorTo(health.gameObject, iTween.Hash("color", new Color(0f,0f,0f, 1f), "time", 1f, "easetype", iTween.EaseType.easeInOutQuart));
+
+        //iTween.FadeTo(health.gameObject, iTween.Hash("alpha", 1f, "time", 1f, "easetype", iTween.EaseType.easeInOutQuart));
     }
 
     void TextUpdateHealth(EventParam _data)
