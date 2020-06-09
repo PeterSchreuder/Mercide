@@ -37,7 +37,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.UI;
 #endregion
 
 /// <summary>
@@ -443,7 +442,6 @@ public class iTween : MonoBehaviour
 	/// A <see cref="System.Object"/> for arguments to be sent to the "oncomplete" method.
 	/// </param>
 	public static void FadeTo(GameObject target, Hashtable args){
-        print(args);
 		ColorTo(target,args);
 	}		
 	
@@ -571,9 +569,7 @@ public class iTween : MonoBehaviour
 				fromColor.a=(float)args["a"];
 			}
 		}
-
-        print(fromColor.a);
-
+		
 		//alpha or amount?
 		if(args.Contains("amount")){
 			fromColor.a=(float)args["amount"];
@@ -589,17 +585,9 @@ public class iTween : MonoBehaviour
 		}else if(target.GetComponent<Light>()){
 			target.GetComponent<Light>().color=fromColor;
 		}
-        else if (target.GetComponent<Image>())
-        {
-            target.GetComponent<Image>().color = fromColor;
-        }
-        else if (target.GetComponent<Text>())
-        {
-            target.GetComponent<Text>().color = fromColor;
-        }
-
-        //set new color arg:
-        args["color"]=tempColor;
+		
+		//set new color arg:
+		args["color"]=tempColor;
 		
 		//establish iTween:
 		args["type"]="color";
@@ -686,15 +674,12 @@ public class iTween : MonoBehaviour
 	/// <param name="oncompleteparams">
 	/// A <see cref="System.Object"/> for arguments to be sent to the "oncomplete" method.
 	/// </param>
-	public static void ColorTo(GameObject target, Hashtable args){
-        //clean args:
-        //args = iTween.CleanArgs(args);
-
-        Color fromColor = new Color();
-        Color tempColor = new Color();
-
-        //handle children:
-        if (!args.Contains("includechildren") || (bool)args["includechildren"]){
+	public static void ColorTo(GameObject target, Hashtable args){	
+		//clean args:
+		args = iTween.CleanArgs(args);
+		
+		//handle children:
+		if(!args.Contains("includechildren") || (bool)args["includechildren"]){
 			foreach(Transform child in target.transform){
 				Hashtable argsCopy = (Hashtable)args.Clone();
 				argsCopy["ischild"]=true;
@@ -706,79 +691,9 @@ public class iTween : MonoBehaviour
 		if (!args.Contains("easetype")) {
 			args.Add("easetype",EaseType.linear);
 		}
-
-        //set tempColor and base fromColor:
-        if (target.GetComponent<Renderer>())
-        {
-            tempColor = fromColor = target.GetComponent<Renderer>().material.color;
-        }
-        else if (target.GetComponent<Light>())
-        {
-            tempColor = fromColor = target.GetComponent<Light>().color;
-        }
-
-        //set augmented fromColor:
-        if (args.Contains("color"))
-        {
-            fromColor = (Color)args["color"];
-        }
-        else
-        {
-            if (args.Contains("r"))
-            {
-                fromColor.r = (float)args["r"];
-            }
-            if (args.Contains("g"))
-            {
-                fromColor.g = (float)args["g"];
-            }
-            if (args.Contains("b"))
-            {
-                fromColor.b = (float)args["b"];
-            }
-            if (args.Contains("a"))
-            {
-                fromColor.a = (float)args["a"];
-            }
-        }
-
-        print(fromColor.a);
-
-        //alpha or amount?
-        if (args.Contains("amount"))
-        {
-            fromColor.a = (float)args["amount"];
-            args.Remove("amount");
-        }
-        else if (args.Contains("alpha"))
-        {
-            fromColor.a = (float)args["alpha"];
-            args.Remove("alpha");
-        }
-
-        //apply fromColor:
-        if (target.GetComponent<Renderer>())
-        {
-            target.GetComponent<Renderer>().material.color = fromColor;
-        }
-        else if (target.GetComponent<Light>())
-        {
-            target.GetComponent<Light>().color = fromColor;
-        }
-        else if (target.GetComponent<Image>())
-        {
-            target.GetComponent<Image>().color = fromColor;
-        }
-        else if (target.GetComponent<Text>())
-        {
-            target.GetComponent<Text>().color = fromColor;
-        }
-
-        //set new color arg:
-        args["color"] = tempColor;
-
-        //establish iTween:
-        args["type"]="color";
+		
+		//establish iTween:
+		args["type"]="color";
 		args["method"]="to";
 		Launch(target,args);
 	}	
