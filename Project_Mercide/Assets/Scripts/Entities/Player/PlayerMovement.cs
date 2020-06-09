@@ -7,19 +7,9 @@ public class PlayerMovement : EntityMovement
 {
     private Action<EventParam> inputListener;
 
-    public float moveSpeed;
-    public float jumpForce;
-    public int maxJumpCount = 1;
-
-    private Rigidbody2D rb;
-    private bool isJumping = false;
-
-    private int jumpCount;
-
-
-    private void Awake()
+    protected override void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        base.Awake();
 
         inputListener = new Action<EventParam>(ProcessInput);
     }
@@ -42,14 +32,6 @@ public class PlayerMovement : EntityMovement
         jumpCount = maxJumpCount;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //ProcessInput();
-
-        
-    }
-
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
@@ -59,15 +41,12 @@ public class PlayerMovement : EntityMovement
             jumpCount = maxJumpCount;
         }
 
-        Move();
+        Move(MoveDirection);
     }
 
     private void ProcessInput(EventParam _input)// int = horizontal, bool = jump
     {
-        Debug.Log(_input.Bool);
-
-        
-        moveDirection = _input.Float;//Input.GetAxis("Horizontal");
+        MoveDirection = _input.Float;//Input.GetAxis("Horizontal");
                                    //Input.GetButtonDown("Jump")
 
         if (_input.Bool && jumpCount > 0)
@@ -76,22 +55,18 @@ public class PlayerMovement : EntityMovement
         }
     }
 
-    private void Move()
+    public override void Move(float _direction)
     {
-        rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2((MoveDirection * moveSpeed) * deltaTime, rb.velocity.y);
 
-        if (isJumping && jumpCount > 0)
-        {
-            rb.AddForce(new Vector2(0f, jumpForce));
-            jumpCount--;
-            
-        }
+        if (isJumping)
+            Jump();
 
         // Reset the values
         isJumping = false;
-        Animate();
-        moveDirection = 0;
 
+        Animate();
+        MoveDirection = 0;
     }
 
     

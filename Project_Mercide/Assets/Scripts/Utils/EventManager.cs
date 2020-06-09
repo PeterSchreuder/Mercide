@@ -144,11 +144,21 @@ public class EventManager : MonoBehaviour
 }
 
 // Parameter structure class
+[Serializable]// Show the Struck in the editor
 public struct EventParam
 {
     public UIScreenTypes UIScreenType;
+    public GameStates GameState;
+
     public string String;
+    public string String2;
+
     public int Int;
+    public int Int2;
+
     public float Float;
+    public float Float2;
+
     public bool Bool;
+    public bool Bool2;
 }

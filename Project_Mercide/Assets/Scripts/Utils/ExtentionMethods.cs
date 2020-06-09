@@ -8,6 +8,23 @@ public static class ExtentionMethods
 {
     #region Vector3
 
+    //- Change
+    public static Vector3 ChangeX(this Vector3 value, float value2)
+    {
+        return new Vector3(value2, value.y, value.z);
+    }
+
+    public static Vector3 ChangeY(this Vector3 value, float value2)
+    {
+        return new Vector3(value.x, value2, value.z);
+    }
+
+    public static Vector3 ChangeZ(this Vector3 value, float value2)
+    {
+        return new Vector3(value.x, value.y, value2);
+    }
+
+    //- Add
     public static Vector3 AddX(this Vector3 value, float add)
     {
         return new Vector3(value.x + add, value.y, value.z);
@@ -62,6 +79,21 @@ public static class ExtentionMethods
     public static Button OnDown(this Button _button)
     {
         Button _return = _button.OnDown();
+
+        return _return;
+    }
+
+    /// <summary>
+    /// Extend from bool
+    /// </summary>
+    /// <param name="_value"></param>
+    /// <returns>false = 0f, true = 1f</returns>
+    public static float ToFloat(this bool _value)
+    {
+        float _return = -1f;
+
+        if (_value)
+            _return = 1f;
 
         return _return;
     }
