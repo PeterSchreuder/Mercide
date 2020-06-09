@@ -70,7 +70,9 @@ public class UIManagerMidGame : UIManager
 
         //hitFlashScreen.CrossFadeAlpha(0f, 1f, false);
 
-        //iTween.ColorTo(health.gameObject, iTween.Hash("color", new Color(0f,0f,0f, 1f), "time", 1f, "easetype", iTween.EaseType.easeInOutQuart));
+        //iTween.FadeTo(health.gameObject, iTween.Hash("alpha", 0f, "time", 1f, "easetype", iTween.EaseType.easeInOutQuart));
+
+        iTween.FadeTo(hitFlashScreen.gameObject, iTween.Hash("alpha", 1f, "amount", 1f, "time", 5f, "easetype", iTween.EaseType.easeOutQuart));
 
         //iTween.FadeTo(health.gameObject, iTween.Hash("alpha", 1f, "time", 1f, "easetype", iTween.EaseType.easeInOutQuart));
     }
