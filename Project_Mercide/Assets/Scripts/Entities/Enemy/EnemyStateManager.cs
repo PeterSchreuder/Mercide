@@ -106,7 +106,7 @@ public class EnemyStateManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (enemyController.CheckIfDead() || mainTarget.CheckIfDead())
+        if (enemyController.CheckIfDead() || (mainTarget && mainTarget.CheckIfDead()))
             return;
 
         switch (AIStateCurrent)
@@ -273,7 +273,7 @@ public class EnemyStateManager : MonoBehaviour
 
         yield return new WaitForSeconds(_timeSec);
 
-        if (!enemyController.CheckIfDead() && !mainTarget.CheckIfDead())
+        if (!enemyController.CheckIfDead() && (mainTarget && !mainTarget.CheckIfDead()))
         {
             switch (_state)
             {
