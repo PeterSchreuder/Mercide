@@ -13,7 +13,7 @@ public class Bullet : GlobalObject
     {
         base.Start();
 
-        
+        startPosition = transform.position;
     }
 
     protected override void FixedUpdate()
