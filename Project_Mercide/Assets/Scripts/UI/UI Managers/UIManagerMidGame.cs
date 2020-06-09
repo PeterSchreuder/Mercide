@@ -10,14 +10,21 @@ public class UIManagerMidGame : UIManager
     [SerializeField]
     private Text health, score;
 
+    [SerializeField]
+    private Image hitFlashScreen;
+
     private Action<EventParam> uiUpdateListenerHealth;
     private Action<EventParam> uiUpdateListenerScore;
+
+    private Action<EventParam> playerHitListener;
 
     // Start is called before the first frame update
     void Awake()
     {
         uiUpdateListenerHealth = new Action<EventParam>(TextUpdateHealth);
         uiUpdateListenerScore = new Action<EventParam>(TextUpdateScore);
+
+        playerHitListener = new Action<EventParam>(FeedbackShowHitFlash);
     }
 
     // - Start listening
@@ -32,6 +39,8 @@ public class UIManagerMidGame : UIManager
 
         EventManager.StartListening("EntityPlayer:GotScore", TextUpdateScore);
         EventManager.StartListening("EntityPlayer:LostScore", TextUpdateScore);
+
+        EventManager.StartListening("EntityPlayer:GotDamage", FeedbackShowHitFlash);
     }
 
     // - Stop listening
@@ -46,17 +55,25 @@ public class UIManagerMidGame : UIManager
 
         EventManager.StopListening("EntityPlayer:GotScore", TextUpdateScore);
         EventManager.StopListening("EntityPlayer:LostScore", TextUpdateScore);
+
+        EventManager.StopListening("EntityPlayer:GotDamage", FeedbackShowHitFlash);
+    }
+
+    void FeedbackShowHitFlash(EventParam _data)
+    {
+        Color _tempColor = hitFlashScreen.color;
+        _tempColor.a = 1f;
+
+        hitFlashScreen.color = _tempColor;
     }
 
     void TextUpdateHealth(EventParam _data)
     {
-        print("health");
         UpdateText(health, "Health: " + _data.Float.ToString());
     }
 
     void TextUpdateScore(EventParam _data)
     {
-        print("score");
         UpdateText(score, _data.Float.ToString() + " :Score");
     }
 }

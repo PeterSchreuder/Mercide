@@ -11,6 +11,9 @@ public class WeaponTemplate : ScriptableObject
     public float wpFireRate = 0.1f;
     public float wpDamage = 25;
     public float wpReloadSpeed = 1;
+    [HideInInspector]
+    public GlobalObject wpOwner = null;
+
 
     [Header("Ammo")]
     public int wpMagazineSize = 30;

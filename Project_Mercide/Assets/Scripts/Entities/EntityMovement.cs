@@ -181,18 +181,15 @@ public class EntityMovement : MonoBehaviour
     /// <param name="_rightSide">true = right, false = left</param>
     public void FlipCharacter(bool _rightSide)
     {
-        //print(facingRight.ToString() + " == " + _rightSide.ToString());
-
-        if (facingRight.Equals(_rightSide))
+        if (facingRight.Equals(_rightSide))// If the Entity is already facting that way
             return;
 
         facingRight = _rightSide;
 
         float rotation = transform.eulerAngles.y.Round();
 
-        // Only rotate if the angle is different
-        //if (rotation != 180f * _rightSide.ToFloat())
-            transform.Rotate(0f, 180f * _rightSide.ToFloat(), 0f);
+        // Rotate and use _rightSide.ToFloat() to scale the added rotation from 180 * 0 to 180 * 1
+        transform.Rotate(0f, 180f * _rightSide.ToFloat(), 0f);
     }
 
     public virtual void Animate()

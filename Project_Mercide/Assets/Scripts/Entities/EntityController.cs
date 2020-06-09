@@ -14,7 +14,8 @@ public class EntityController : GlobalObject
     {
         base.Start();
 
-        holster.TeamNumber = TeamNumber;
+        Holster.TeamNumber = TeamNumber;
+        Holster.weaponTemplate.wpOwner = this;// Set the weapon owner to this script
 
         HealthAdd(100f);
     }
@@ -43,6 +44,12 @@ public class EntityController : GlobalObject
                 Die();
             }
         }
+    }
+
+    protected virtual void FireWeapon(EventParam _input)
+    {
+        if (_input.Bool)
+            Holster.Shoot();
     }
 
     // Update is called once per frame

@@ -35,6 +35,12 @@ public class EnemyStateManager : MonoBehaviour
             AIStatePrevious = AIStateCurrent;
             aiStateCurrent = value;
 
+            if (enemyController.CheckIfDead() || (mainTarget && mainTarget.CheckIfDead()))
+            {
+                AIStateCurrent = AIStates.Idle;
+                return;
+            }
+
             TextUpdateDebugState();
 
             switch (AIStateCurrent)
@@ -100,6 +106,9 @@ public class EnemyStateManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (enemyController.CheckIfDead() || mainTarget.CheckIfDead())
+            return;
+
         switch (AIStateCurrent)
         {
             case AIStates.Idle://===== Doing nothing =====
@@ -264,34 +273,37 @@ public class EnemyStateManager : MonoBehaviour
 
         yield return new WaitForSeconds(_timeSec);
 
-        switch (_state)
+        if (!enemyController.CheckIfDead() && !mainTarget.CheckIfDead())
         {
-            case AIStates.Idle:// Doing nothing
+            switch (_state)
+            {
+                case AIStates.Idle:// Doing nothing
 
-                break;
-            case AIStates.Alerted:// In player screen
+                    break;
+                case AIStates.Alerted:// In player screen
 
-                break;
-            case AIStates.AlertedDucked:// Alerted but ducked
+                    break;
+                case AIStates.AlertedDucked:// Alerted but ducked
 
-                break;
-            case AIStates.Staggered:
+                    break;
+                case AIStates.Staggered:
 
-                if (AIStatePrevious == AIStates.Idle)
-                    AIStateCurrent = AIStates.Alerted;
-                else
-                    AIStateCurrent = AIStatePrevious;
+                    if (AIStatePrevious == AIStates.Idle)
+                        AIStateCurrent = AIStates.Alerted;
+                    else
+                        AIStateCurrent = AIStatePrevious;
 
-                break;
-            case AIStates.Shooting:// Just shooting
+                    break;
+                case AIStates.Shooting:// Just shooting
 
-                break;
-            case AIStates.Charging:// Running at the player
+                    break;
+                case AIStates.Charging:// Running at the player
 
-                break;
-            case AIStates.RePositioning:// Moving to another (better point)
+                    break;
+                case AIStates.RePositioning:// Moving to another (better point)
 
-                break;
+                    break;
+            }
         }
 
         //yield return new WaitForSeconds(_timeSec);

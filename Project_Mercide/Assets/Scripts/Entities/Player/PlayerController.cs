@@ -30,9 +30,15 @@ public class PlayerController : EntityController
         EventManager.StopListening("InputManager:Actions", FireWeapon);
     }
 
-    protected void FireWeapon(EventParam _input)
+    public void Damage()
     {
-        if (_input.Bool)
-            Holster.Shoot();
+        HealthAdd(-10f);
+    }
+
+    public override void Die()
+    {
+        EventManager.TriggerEvent("Entity" + gameObject.tag + ":Died", new EventParam { Float = 100 });
+
+        transform.Rotate(0f, 0f, 90f);
     }
 }

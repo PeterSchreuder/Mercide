@@ -6,13 +6,14 @@ public class Bullet : GlobalObject
 {
     public BulletTemplate bulletTemplate;
 
+    private Vector2 startPosition;
+
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
 
-        //rb.velocity = (transform.right * bulletTemplate.bltSpeed) * deltaTime;
-        //
+        
     }
 
     protected override void FixedUpdate()
@@ -20,6 +21,9 @@ public class Bullet : GlobalObject
         base.FixedUpdate();
 
         transform.Translate((transform.right * bulletTemplate.bltSpeed) * deltaTime, Space.World);
+
+        if (transform.position.x - startPosition.x >= bulletTemplate.bltRange)
+            Die();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -36,7 +40,7 @@ public class Bullet : GlobalObject
                 _otherEntityController.HealthAdd(-bulletTemplate.bltDamage);
             }
         }
-        else
+        else if (!other.CompareTag("Trigger"))
         {
             _destroy = true;
         }

@@ -25,12 +25,14 @@ public class UIManagerWinGame : UIManager
     void OnEnable()
     {
         EventManager.StartListening("EntityPlayer:UpdateScore", TextUpdateScore);
+        EventManager.StartListening("EntityPlayer:UpdateKills", TextUpdateKills);
     }
 
     // - Stop listening
     void OnDisable()
     {
         EventManager.StopListening("EntityPlayer:UpdateScore", TextUpdateScore);
+        EventManager.StopListening("EntityPlayer:UpdateKills", TextUpdateKills);
     }
 
     void TextUpdateScore(EventParam _data)
@@ -40,6 +42,6 @@ public class UIManagerWinGame : UIManager
 
     void TextUpdateKills(EventParam _data)
     {
-        UpdateText(score, "Kills: " + _data.Int.ToString());
+        UpdateText(kills, "Kills: " + _data.Int.ToString() + " / " + _data.Int2.ToString());
     }
 }

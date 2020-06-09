@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EntityHealthStates { Alive, Dead };
+
 public class GlobalObject : MonoBehaviour
 {
     [SerializeField]
@@ -11,6 +13,7 @@ public class GlobalObject : MonoBehaviour
     private int objectId;
     public int ObjectId { get => objectId; set => objectId = value; }
 
+    //- Health
     private float health;
     public float Health
     {
@@ -18,11 +21,15 @@ public class GlobalObject : MonoBehaviour
         set
         {
             // Fire an event that the object lost health
-            EventManager.TriggerEvent("Entity" + gameObject.tag + ":UpdateHealth", new EventParam { Float = Health });
+            EventManager.TriggerEvent("Entity" + gameObject.tag + ":UpdateHealth", new EventParam { Float = Health, Float2 = value });
             health = value;
         }
     }
 
+    private EntityHealthStates healthStateCurrent;
+    public EntityHealthStates HealthStateCurrent { get => healthStateCurrent; set => healthStateCurrent = value; }
+
+    //- Current Platform line
     [SerializeField]
     private int platformLine;
     public int PlatformLine { get => platformLine; set => platformLine = value; }
@@ -55,9 +62,19 @@ public class GlobalObject : MonoBehaviour
 
     public virtual void Die()
     {
-        print("Entity" + gameObject.tag + ":Died");
+        HealthStateCurrent = EntityHealthStates.Dead;
+
         EventManager.TriggerEvent("Entity" + gameObject.tag + ":Died", new EventParam { Float = 100 });
         Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Check if the Object is Dead via a TernaryOperator
+    /// </summary>
+    /// <returns></returns>
+    public virtual bool CheckIfDead()
+    {
+        return HealthStateCurrent > EntityHealthStates.Dead ? true : false;
     }
 
     /// <summary>

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Bullet
   m_EditorClassIdentifier: 
   bltSpeed: 40
+  bltRange: 25
   bltDamage: 25

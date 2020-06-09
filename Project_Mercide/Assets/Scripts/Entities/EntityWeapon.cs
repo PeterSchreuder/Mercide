@@ -35,7 +35,7 @@ public class EntityWeapon : GlobalObject
     /// </summary>
     public virtual void Shoot()
     {
-        if (!canShoot)
+        if (!canShoot && CheckIfOwnerIsAlive())
             return;
 
         if (weaponTemplate.wpAmmoCurrent == 0 && weaponTemplate.wpAmmoBackup == 0)
@@ -76,5 +76,15 @@ public class EntityWeapon : GlobalObject
         yield return new WaitForSeconds(_fireRate);
 
         canShoot = true;
+    }
+
+    bool CheckIfOwnerIsAlive()
+    {
+        bool _return = false;
+
+        if (weaponTemplate.wpOwner && weaponTemplate.wpOwner.HealthStateCurrent != EntityHealthStates.Dead)
+            _return = true;
+
+        return _return;
     }
 }

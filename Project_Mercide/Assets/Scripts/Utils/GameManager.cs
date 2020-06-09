@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 {
     private Action<EventParam> changeStateListener;
 
+    private Action<EventParam> playerDeathListener;
+
     // Debugmode
     [SerializeField]
     private bool debugEnabled = true;
@@ -39,7 +41,7 @@ public class GameManager : MonoBehaviour
                     
 
                     if (!crIsRunning)
-                        StartCoroutine(WaitAfterState(GameStates.Begin, 2f));
+                        StartCoroutine(WaitAfterState(GameStates.Begin, 0.5f));
 
                     //GameStateCurrent = GameStates.Mid;
 
@@ -92,18 +94,23 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
 
         GameStateCurrent = GameStates.Begin;
+
+        changeStateListener = new Action<EventParam>(EventUpdateGameState);
+        playerDeathListener = new Action<EventParam>(PlayerDied);
     }
 
     void OnEnable()
     {
         //Register With Action variable
         EventManager.StartListening("GameManager:ChangeState", EventUpdateGameState);
+        EventManager.StartListening("EntityPlayer:Died", PlayerDied);
     }
 
     void OnDisable()
     {
         //Un-Register With Action variable
         EventManager.StopListening("GameManager:ChangeState", EventUpdateGameState);
+        EventManager.StopListening("EntityPlayer:Died", PlayerDied);
     }
 
     // Update is called once per frame
@@ -170,6 +177,11 @@ public class GameManager : MonoBehaviour
         // Check if the variable is assigned
         if (_data.GameState != GameStates.Noone)
             GameStateCurrent = _data.GameState;
+    }
+
+    public void PlayerDied(EventParam _data)
+    {
+        GameStateCurrent = GameStates.Lose;
     }
 
     public void RestartLevel()

@@ -8,6 +8,8 @@ public class GameScoreManager : MonoBehaviour
     private Action<EventParam> updateListenerEnemy;
     private Action<EventParam> gameStateListener;
 
+    private int enemyAmountTotal;
+
     private float scoreAmount;
     public float ScoreAmount
     {
@@ -22,10 +24,19 @@ public class GameScoreManager : MonoBehaviour
     }
 
     private int killAmount = 0;
-    public int KillAmount { get => killAmount; set => killAmount = value; }
+    public int KillAmount
+    {
+        get => killAmount;
+        set
+        {
+            killAmount = value;
+            EventManager.TriggerEvent("EntityPlayer:UpdateKills", new EventParam { Int = KillAmount });
+        }
+    }
 
     void SendScore()
     {
+
         EventManager.TriggerEvent("EntityPlayer:UpdateScore", new EventParam { Float = ScoreAmount });
     }
 
@@ -38,8 +49,12 @@ public class GameScoreManager : MonoBehaviour
 
     private void Start()
     {
-        //UpdateScoreAmountFloat(0);
-        //UpdateKillAmount(0);
+        // Get the amount of enemies
+        enemyAmountTotal = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        // Zero the score
+        UpdateScoreAmountFloat(0);
+        UpdateKillAmount(0);
     }
 
     // - Start listening
@@ -47,8 +62,6 @@ public class GameScoreManager : MonoBehaviour
     {
         EventManager.StartListening("EntityEnemy:Died", UpdateKillAmount);
         EventManager.StartListening("GameManager:ChangeState", UpdateByGameState);
-
-        
     }
 
     // - Stop listening
@@ -71,10 +84,18 @@ public class GameScoreManager : MonoBehaviour
     {
         if (_data.GameState == GameStates.Mid || _data.GameState == GameStates.Win)
         {
-            print("Update");
             // Send the data
             EventManager.TriggerEvent("EntityPlayer:UpdateScore", new EventParam { Float = ScoreAmount });
-            EventManager.TriggerEvent("EntityPlayer:UpdateKills", new EventParam { Int = KillAmount });
+            
+        }
+
+        // Send kill amount on win
+        if (_data.GameState == GameStates.Win)
+        {
+            EventManager.TriggerEvent("EntityPlayer:UpdateKills", new EventParam { Int = KillAmount, Int2 = enemyAmountTotal, Bool = true });
+
+            // After the Win dont count the kills anymore
+            EventManager.StopListening("EntityEnemy:Died", UpdateKillAmount);
         }
     }
 
@@ -83,15 +104,13 @@ public class GameScoreManager : MonoBehaviour
     void UpdateKillAmount(int _amount)
     {
         KillAmount += _amount;
-        EventManager.TriggerEvent("EntityPlayer:UpdateKills", new EventParam { Int = KillAmount });
-        UpdateScoreAmountFloat(100f);
+        UpdateScoreAmountFloat(_amount * 100f);
     }
 
     void UpdateKillAmount(EventParam _data)
     {
-        KillAmount += _data.Int;
-        EventManager.TriggerEvent("EntityPlayer:UpdateKills", new EventParam { Int = KillAmount });
-        UpdateScoreAmountFloat(100f);
+        KillAmount += 1;
+        UpdateScoreAmountFloat(_data.Float);
     }
 
     #endregion
@@ -101,6 +120,7 @@ public class GameScoreManager : MonoBehaviour
     void UpdateScoreAmountFloat(float _amount)
     {
         ScoreAmount += _amount;
+
     }
 
     void UpdateScoreAmount(EventParam _data)
