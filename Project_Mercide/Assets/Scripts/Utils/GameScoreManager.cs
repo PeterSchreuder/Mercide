@@ -5,43 +5,108 @@ using UnityEngine;
 
 public class GameScoreManager : MonoBehaviour
 {
-    private Action<EventParam> updateListenerScore;
+    private Action<EventParam> updateListenerEnemy;
+    private Action<EventParam> gameStateListener;
 
-    private float scoreAmount = 0;
-    public float ScoreAmount { get => scoreAmount; set => scoreAmount = value; }
+    private float scoreAmount;
+    public float ScoreAmount
+    {
+        get => scoreAmount;
+
+        set
+        {
+            scoreAmount = value;
+            SendScore();
+        }
+            
+    }
+
+    private int killAmount = 0;
+    public int KillAmount { get => killAmount; set => killAmount = value; }
+
+    void SendScore()
+    {
+        EventManager.TriggerEvent("EntityPlayer:UpdateScore", new EventParam { Float = ScoreAmount });
+    }
 
     // Start is called before the first frame update
     void Awake()
     {
-        updateListenerScore = new Action<EventParam>(UpdateScore);
+        updateListenerEnemy = new Action<EventParam>(UpdateKillAmount);
+        gameStateListener = new Action<EventParam>(UpdateByGameState);
     }
 
     private void Start()
     {
-        UpdateScore(new EventParam { Float = 0 });
+        //UpdateScoreAmountFloat(0);
+        //UpdateKillAmount(0);
     }
 
     // - Start listening
     void OnEnable()
     {
-        EventManager.StartListening("EntityEnemy:Died", UpdateScore);
+        EventManager.StartListening("EntityEnemy:Died", UpdateKillAmount);
+        EventManager.StartListening("GameManager:ChangeState", UpdateByGameState);
+
+        
     }
 
     // - Stop listening
     void OnDisable()
     {
-        EventManager.StopListening("EntityEnemy:Died", UpdateScore);
+        EventManager.StopListening("EntityEnemy:Died", UpdateKillAmount);
+        EventManager.StopListening("GameManager:ChangeState", UpdateByGameState);
     }
 
-    //void UpdateScore(float _amount)
+    //void UpdateScoreAmount(float _amount)
     //{
     //    EventManager.TriggerEvent("EntityPlayer:GotScore", new EventParam { Float = _amount });
     //}
 
-    void UpdateScore(EventParam _data)
+    /// <summary>
+    /// Updates when the GameStateCurrent changes
+    /// </summary>
+    /// <param name="_data"></param>
+    void UpdateByGameState(EventParam _data)
     {
-        print("Score");
-        ScoreAmount += _data.Float;
-        EventManager.TriggerEvent("EntityPlayer:GotScore", new EventParam { Float = ScoreAmount });
+        if (_data.GameState == GameStates.Mid || _data.GameState == GameStates.Win)
+        {
+            print("Update");
+            // Send the data
+            EventManager.TriggerEvent("EntityPlayer:UpdateScore", new EventParam { Float = ScoreAmount });
+            EventManager.TriggerEvent("EntityPlayer:UpdateKills", new EventParam { Int = KillAmount });
+        }
     }
+
+    #region Kills
+
+    void UpdateKillAmount(int _amount)
+    {
+        KillAmount += _amount;
+        EventManager.TriggerEvent("EntityPlayer:UpdateKills", new EventParam { Int = KillAmount });
+        UpdateScoreAmountFloat(100f);
+    }
+
+    void UpdateKillAmount(EventParam _data)
+    {
+        KillAmount += _data.Int;
+        EventManager.TriggerEvent("EntityPlayer:UpdateKills", new EventParam { Int = KillAmount });
+        UpdateScoreAmountFloat(100f);
+    }
+
+    #endregion
+
+    #region Score
+
+    void UpdateScoreAmountFloat(float _amount)
+    {
+        ScoreAmount += _amount;
+    }
+
+    void UpdateScoreAmount(EventParam _data)
+    {
+        ScoreAmount += _data.Float;
+    }
+
+    #endregion
 }

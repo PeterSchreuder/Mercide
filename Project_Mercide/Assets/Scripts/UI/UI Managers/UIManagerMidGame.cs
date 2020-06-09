@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class MidGameUIManager : MonoBehaviour
+public class UIManagerMidGame : UIManager
 {
     [SerializeField]
     private Text health, score;
@@ -28,6 +28,8 @@ public class MidGameUIManager : MonoBehaviour
         EventManager.StartListening("EntityPlayer:GotHealth", TextUpdateHealth);
         EventManager.StartListening("EntityPlayer:GotDamage", TextUpdateHealth);
 
+        EventManager.StartListening("EntityPlayer:UpdateScore", TextUpdateScore);
+
         EventManager.StartListening("EntityPlayer:GotScore", TextUpdateScore);
         EventManager.StartListening("EntityPlayer:LostScore", TextUpdateScore);
     }
@@ -40,22 +42,21 @@ public class MidGameUIManager : MonoBehaviour
         EventManager.StopListening("EntityPlayer:GotHealth", TextUpdateHealth);
         EventManager.StopListening("EntityPlayer:GotDamage", TextUpdateHealth);
 
+        EventManager.StopListening("EntityPlayer:UpdateScore", TextUpdateScore);
+
         EventManager.StopListening("EntityPlayer:GotScore", TextUpdateScore);
         EventManager.StopListening("EntityPlayer:LostScore", TextUpdateScore);
     }
 
     void TextUpdateHealth(EventParam _data)
     {
+        print("health");
         UpdateText(health, "Health: " + _data.Float.ToString());
     }
 
     void TextUpdateScore(EventParam _data)
     {
+        print("score");
         UpdateText(score, _data.Float.ToString() + " :Score");
-    }
-
-    void UpdateText(Text _text, string _value)
-    {
-        _text.text = _value;
     }
 }

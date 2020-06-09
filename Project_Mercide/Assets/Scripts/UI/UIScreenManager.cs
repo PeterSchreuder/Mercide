@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public enum UIScreenTypes { Begin, Mid, Pause, Win, Lose, Input, Debug };
+public enum UIScreenTypes { Noone, Begin, Mid, Pause, Win, Lose, Input, Debug };
 
 
 

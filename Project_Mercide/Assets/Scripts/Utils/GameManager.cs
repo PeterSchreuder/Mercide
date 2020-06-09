@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public enum GameStates { Begin, Mid, Win, Lose };
+public enum GameStates { Noone, Begin, Mid, Win, Lose };
 
 public class GameManager : MonoBehaviour
 {
+    private Action<EventParam> changeStateListener;
+
     // Debugmode
     [SerializeField]
     private bool debugEnabled = true;
@@ -32,7 +36,6 @@ public class GameManager : MonoBehaviour
                     // Setup the game
                     if (DebugEnabled || Debug.isDebugBuild)
                         EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Debug });
-
                     
 
                     if (!crIsRunning)
@@ -53,9 +56,19 @@ public class GameManager : MonoBehaviour
 
                 case GameStates.Win:
 
+                    EventManager.TriggerEvent("UIScreen:Close", new EventParam { UIScreenType = UIScreenTypes.Mid });
+                    EventManager.TriggerEvent("UIScreen:Close", new EventParam { UIScreenType = UIScreenTypes.Input });
+
+                    EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Win });
+
                     break;
 
                 case GameStates.Lose:
+
+                    EventManager.TriggerEvent("UIScreen:Close", new EventParam { UIScreenType = UIScreenTypes.Mid });
+                    EventManager.TriggerEvent("UIScreen:Close", new EventParam { UIScreenType = UIScreenTypes.Input });
+
+                    EventManager.TriggerEvent("UIScreen:Open", new EventParam { UIScreenType = UIScreenTypes.Lose });
 
                     break;
             }
@@ -79,6 +92,18 @@ public class GameManager : MonoBehaviour
         Application.targetFrameRate = 60;
 
         GameStateCurrent = GameStates.Begin;
+    }
+
+    void OnEnable()
+    {
+        //Register With Action variable
+        EventManager.StartListening("GameManager:ChangeState", EventUpdateGameState);
+    }
+
+    void OnDisable()
+    {
+        //Un-Register With Action variable
+        EventManager.StopListening("GameManager:ChangeState", EventUpdateGameState);
     }
 
     // Update is called once per frame
@@ -134,5 +159,21 @@ public class GameManager : MonoBehaviour
         }
 
         crIsRunning = false;
+    }
+
+    /// <summary>
+    /// Update the GameStateCurrent through an Event
+    /// </summary>
+    /// <param name="_data">gameState</param>
+    public void EventUpdateGameState(EventParam _data)
+    {
+        // Check if the variable is assigned
+        if (_data.GameState != GameStates.Noone)
+            GameStateCurrent = _data.GameState;
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
