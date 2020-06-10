@@ -11,12 +11,13 @@ public class UIManagerMidGame : UIManager
     private Text health = null, score = null;
 
     [SerializeField]
-    private Image hitFlashScreen = null;
+    private Image hitFlashScreen = null, healFlashScreen = null;
 
     private Action<EventParam> uiUpdateListenerHealth;
     private Action<EventParam> uiUpdateListenerScore;
 
     private Action<EventParam> playerHitListener;
+    private Action<EventParam> playerHealthListener;
 
     // Start is called before the first frame update
     void Awake()
@@ -25,9 +26,13 @@ public class UIManagerMidGame : UIManager
         uiUpdateListenerScore = new Action<EventParam>(TextUpdateScore);
 
         playerHitListener = new Action<EventParam>(FeedbackShowHitFlash);
+        playerHealthListener = new Action<EventParam>(FeedbackShowHealFlash);
 
         hitFlashScreen.gameObject.SetActive(true);
         hitFlashScreen.CrossFadeAlpha(0f, 0f, false);
+
+        healFlashScreen.gameObject.SetActive(true);
+        healFlashScreen.CrossFadeAlpha(0f, 0f, false);
     }
 
     // - Start listening
@@ -44,6 +49,7 @@ public class UIManagerMidGame : UIManager
         EventManager.StartListening("EntityPlayer:LostScore", TextUpdateScore);
 
         EventManager.StartListening("EntityPlayer:GotDamage", FeedbackShowHitFlash);
+        EventManager.StartListening("EntityPlayer:GotHealth", FeedbackShowHealFlash);
     }
 
     // - Stop listening
@@ -60,12 +66,22 @@ public class UIManagerMidGame : UIManager
         EventManager.StopListening("EntityPlayer:LostScore", TextUpdateScore);
 
         EventManager.StopListening("EntityPlayer:GotDamage", FeedbackShowHitFlash);
+        EventManager.StopListening("EntityPlayer:GotHealth", FeedbackShowHealFlash);
     }
 
     void FeedbackShowHitFlash(EventParam _data)
     {
         hitFlashScreen.CrossFadeAlpha(1f, 0f, false);
         hitFlashScreen.CrossFadeAlpha(0f, 0.75f, false);
+
+        //ITween is faulty
+        //iTween.FadeTo(hitFlashScreen.gameObject, iTween.Hash("alpha", 0f, "time", 0.75, "easetype", iTween.EaseType.easeOutQuad));
+    }
+
+    void FeedbackShowHealFlash(EventParam _data)
+    {
+        healFlashScreen.CrossFadeAlpha(1f, 0f, false);
+        healFlashScreen.CrossFadeAlpha(0f, 0.75f, false);
 
         //ITween is faulty
         //iTween.FadeTo(hitFlashScreen.gameObject, iTween.Hash("alpha", 0f, "time", 0.75, "easetype", iTween.EaseType.easeOutQuad));

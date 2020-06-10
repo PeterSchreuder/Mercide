@@ -116,8 +116,6 @@ namespace UnityEngine.UI
 
             _down = false;
 
-            print("UP");
-
             UISystemProfilerApi.AddMarker("Button.onUp", this);
             m_OnUp.Invoke();
         }

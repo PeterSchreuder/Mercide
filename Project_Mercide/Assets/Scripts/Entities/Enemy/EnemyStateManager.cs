@@ -24,6 +24,7 @@ public class EnemyStateManager : MonoBehaviour
     private bool crIsRunning = false;// if the Coroutine is running
 
     // Data
+    private GameManager gameManager;
 
     private AIStates aiStateCurrent;
     public AIStates AIStateCurrent
@@ -60,8 +61,6 @@ public class EnemyStateManager : MonoBehaviour
                 case AIStates.Staggered:// Hit by target(s)
 
                     mainTarget = enemyController.lastHitter.gameObject.GetComponent<PlayerController>();
-                    print(mainTarget);
-                    print(enemyController.lastHitter);
 
                     enemyMovement.MoveStop();
 
@@ -116,9 +115,14 @@ public class EnemyStateManager : MonoBehaviour
         AIStateCurrent = AIStates.Idle;
     }
 
+    private void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
+
     private void FixedUpdate()
     {
-        if (enemyController.CheckIfDead())
+        if (enemyController.CheckIfDead() || gameManager.GameStateCurrent != GameStates.Mid)
             return;
 
         // If the mainTarget is dead. And the current state not is idle. Set it to idle
@@ -175,7 +179,7 @@ public class EnemyStateManager : MonoBehaviour
                 {
                     case TargetVecticalPosition.Same:
 
-                        if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.5)
+                        if (Random.Range(0f, enemyTemplate.decisionChance) <= 9)
                             AIStateCurrent = AIStates.Shooting;
 
                         break;
@@ -216,7 +220,7 @@ public class EnemyStateManager : MonoBehaviour
 
                 if (Mathf.Abs(TargetCheckDistance().x) >= enemyTemplate.range)
                 {
-                    if (Random.Range(0f, enemyTemplate.decisionChance) <= 2)
+                    if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.8)
                     {
                         AIStateCurrent = AIStates.Alerted;
                         break;

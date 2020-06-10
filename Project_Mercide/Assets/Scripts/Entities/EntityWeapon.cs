@@ -63,6 +63,7 @@ public class EntityWeapon : GlobalObject
         Bullet _bulletScript = _bullet.GetComponent<Bullet>();
 
         _bulletScript.bulletTemplate.bltDamage = weaponTemplate.wpDamage;
+        _bulletScript.bulletTemplate.bltOwner = weaponTemplate.wpOwner;
         _bulletScript.TeamNumber = TeamNumber;
     }
 

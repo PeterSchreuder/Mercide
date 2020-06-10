@@ -43,5 +43,16 @@ public class UIManagerWinGame : UIManager
     void TextUpdateKills(EventParam _data)
     {
         UpdateText(kills, "Kills: " + _data.Int.ToString() + " / " + _data.Int2.ToString());
+
+        if (_data.Int == 0)
+        {
+            message.text = "No Kills!?";
+            message.color = new Color(1f, 0f, 0f, 0.73f);
+        }
+        else
+        {
+            message.text = "Pretty Good!";
+            message.color = new Color(0f, 1f, 0.09488511f, 0.73f);
+        }
     }
 }

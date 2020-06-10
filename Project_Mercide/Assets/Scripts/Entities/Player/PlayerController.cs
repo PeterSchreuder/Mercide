@@ -11,6 +11,7 @@ public class PlayerController : EntityController
     public int PlayerIndex { get => playerIndex; set => playerIndex = value; }
 
     private Action<EventParam> actionListener;
+    private Action<EventParam> healthListener;
 
     [SerializeField]
     private float invincibleTime = 2f;
@@ -23,23 +24,31 @@ public class PlayerController : EntityController
         base.Awake();
 
         actionListener = new Action<EventParam>(FireWeapon);
+        healthListener = new Action<EventParam>(HealthListener);
     }
 
     // - Start listening
     void OnEnable()
     {
         EventManager.StartListening("InputManager:Actions", FireWeapon);
+        EventManager.StartListening("EntityPlayer:AddHealth", HealthListener);
     }
 
     // - Stop listening
     void OnDisable()
     {
         EventManager.StopListening("InputManager:Actions", FireWeapon);
+        EventManager.StopListening("EntityPlayer:AddHealth", HealthListener);
     }
 
     public void Damage()
     {
         HealthAdd(-10f);
+    }
+
+    void HealthListener(EventParam _data)
+    {
+        HealthAdd(_data.Float);
     }
 
     public override void HealthAdd(float _amount)
@@ -75,7 +84,6 @@ public class PlayerController : EntityController
             entitySprite.color.ChangeAlpha(1f);
         }
 
-        print(HealthStateCurrent);
         HealthStateCurrent = EntityHealthStates.Alive;
     }
 }

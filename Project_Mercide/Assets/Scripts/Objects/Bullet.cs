@@ -37,7 +37,7 @@ public class Bullet : GlobalObject
             {
                 _destroy = true;
 
-                _otherEntityController.lastHitter = this.GetComponent<GlobalObject>();
+                _otherEntityController.lastHitter = bulletTemplate.bltOwner;
                 _otherEntityController.HealthAdd(-bulletTemplate.bltDamage);
 
             }
