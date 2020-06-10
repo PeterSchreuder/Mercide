@@ -238,7 +238,7 @@ public class EnemyStateManager : MonoBehaviour
                         break;
                     }
 
-                if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.5)
+                if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.4)
                 {
                     enemyController.Holster.Shoot();
                 }

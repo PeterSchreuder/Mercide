@@ -52,7 +52,7 @@ public class EntityWeapon : GlobalObject
         // Disable shooting
         canShoot = false;
         //weaponTemplate.wpAmmoCurrent--;
-        StartCoroutine(ShootTimer(weaponTemplate.wpFireRate));
+        StartCoroutine(ShootTimer(weaponTemplate.wpFireRate * deltaTime));
 
         // Play weapon sound
         audioSource.pitch = Random.Range(0.95f, 1.10f);

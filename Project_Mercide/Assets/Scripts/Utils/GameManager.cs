@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
                     
 
                     if (!crIsRunning)
-                        StartCoroutine(WaitAfterState(GameStates.Begin, 0.5f));
+                        StartCoroutine(WaitAfterState(GameStates.Begin, 1.25f));
 
                     //GameStateCurrent = GameStates.Mid;
 
