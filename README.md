@@ -6,7 +6,7 @@ Please see the Development branche, for the newest features and additions!:<br>
 
 
 Interesting scripts:<br>
-[Link to EnemyStateManager](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/Entities/Enemy/EnemyStateManager.cs)
+[EnemyStateManager](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/Entities/Enemy/EnemyStateManager.cs)
 
 [EventManager](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/Utils/EventManager.cs)
 
