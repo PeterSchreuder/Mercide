@@ -115,7 +115,6 @@ public class EntityMovement : MonoBehaviour
         {
             if (_collision.gameObject.CompareTag("Platform"))
             {
-                print("UnDuck  " + _collision.gameObject.tag);
                 Physics2D.IgnoreCollision(_collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
                 //_collisionsRemove.Add(_collision);
             }
@@ -129,7 +128,6 @@ public class EntityMovement : MonoBehaviour
         if (_collision.gameObject.CompareTag("Platform") && !savedCollisions.Contains(_collision))
         {
             savedCollisions.Add(_collision);
-            print(_collision.gameObject.tag);
         }
             
     }

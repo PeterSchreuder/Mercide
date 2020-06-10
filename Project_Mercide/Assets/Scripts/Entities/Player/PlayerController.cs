@@ -14,7 +14,7 @@ public class PlayerController : EntityController
     private Action<EventParam> healthListener;
 
     [SerializeField]
-    private float invincibleTime = 2f;
+    private float invincibleTime = 1.25f;
 
     [SerializeField]
     private SpriteRenderer entitySprite = null;
