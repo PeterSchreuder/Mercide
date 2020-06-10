@@ -100,7 +100,6 @@ public class EntityMovement : MonoBehaviour
         {
             if (_collision.gameObject.CompareTag("Platform"))
             {
-                print(_collision.gameObject.tag);
                 Physics2D.IgnoreCollision(_collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
             }                
         }
