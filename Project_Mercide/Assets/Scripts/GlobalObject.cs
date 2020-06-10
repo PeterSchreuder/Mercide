@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum EntityHealthStates { Alive, Dead };
+public enum EntityHealthStates { Alive, Dead, Invincible };
 
 public class GlobalObject : MonoBehaviour
 {
@@ -12,6 +12,9 @@ public class GlobalObject : MonoBehaviour
 
     private int objectId;
     public int ObjectId { get => objectId; set => objectId = value; }
+
+    [HideInInspector]
+    public GlobalObject lastHitter;
 
     //- Health
     private float health;
@@ -74,7 +77,7 @@ public class GlobalObject : MonoBehaviour
     /// <returns></returns>
     public virtual bool CheckIfDead()
     {
-        return HealthStateCurrent > EntityHealthStates.Dead ? true : false;
+        return HealthStateCurrent == EntityHealthStates.Dead ? true : false;
     }
 
     /// <summary>

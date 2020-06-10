@@ -33,11 +33,13 @@ public class Bullet : GlobalObject
 
         if (_otherEntityController)
         {
-            if (_otherEntityController.TeamNumber != TeamNumber)
+            if (!_otherEntityController.CheckIfDead() && _otherEntityController.HealthStateCurrent != EntityHealthStates.Invincible && _otherEntityController.TeamNumber != TeamNumber)
             {
                 _destroy = true;
 
+                _otherEntityController.lastHitter = this.GetComponent<GlobalObject>();
                 _otherEntityController.HealthAdd(-bulletTemplate.bltDamage);
+
             }
         }
         else if (!other.CompareTag("Trigger"))

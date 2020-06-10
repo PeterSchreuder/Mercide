@@ -25,6 +25,9 @@ public class UIManagerMidGame : UIManager
         uiUpdateListenerScore = new Action<EventParam>(TextUpdateScore);
 
         playerHitListener = new Action<EventParam>(FeedbackShowHitFlash);
+
+        hitFlashScreen.gameObject.SetActive(true);
+        hitFlashScreen.CrossFadeAlpha(0f, 0f, false);
     }
 
     // - Start listening
@@ -61,10 +64,11 @@ public class UIManagerMidGame : UIManager
 
     void FeedbackShowHitFlash(EventParam _data)
     {
-        Color _tempColor = hitFlashScreen.color;
-        _tempColor.a = 1f;
+        hitFlashScreen.CrossFadeAlpha(1f, 0f, false);
+        hitFlashScreen.CrossFadeAlpha(0f, 0.75f, false);
 
-        hitFlashScreen.color = _tempColor;
+        //ITween is faulty
+        //iTween.FadeTo(hitFlashScreen.gameObject, iTween.Hash("alpha", 0f, "time", 0.75, "easetype", iTween.EaseType.easeOutQuad));
     }
 
     void TextUpdateHealth(EventParam _data)

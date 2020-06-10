@@ -41,6 +41,7 @@ public class EntityController : GlobalObject
 
             if (Health <= 0)
             {
+                transform.Rotate(0f, 0f, 90f);
                 Die();
             }
         }
