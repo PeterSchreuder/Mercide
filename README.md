@@ -1,11 +1,11 @@
 # Mercide
 Side-scrolling shooter
 
-Please see the Development branche, for the newest features and additions!:<br>
+**Please see the Development branche, for the newest features and additions!:**<br>
 [Link to Development](https://github.com/PeterSchreuder/Mercide/tree/development)
 
 
-Interesting scripts:<br>
+**Interesting scripts:**<br>
 [- EnemyStateManager](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/Entities/Enemy/EnemyStateManager.cs)
 
 [- EventManager](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/Utils/EventManager.cs)
