@@ -6,6 +6,7 @@ using System;
 
 public static class ExtentionMethods
 {
+
     #region Vector3
 
     //- Change
@@ -81,6 +82,17 @@ public static class ExtentionMethods
         Button _return = _button.OnDown();
 
         return _return;
+    }
+
+    /// <summary>
+    /// Changes the Alpha of a Color
+    /// </summary>
+    /// <param name="_color"></param>
+    /// <param name="_alpha">0 to 1</param>
+    /// <returns></returns>
+    public static Color ChangeAlpha(this Color _color, float _alpha)
+    {
+        return new Color(_color.r, _color.g, _color.b, _alpha);
     }
 
     /// <summary>

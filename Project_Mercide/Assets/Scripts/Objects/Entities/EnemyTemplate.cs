@@ -6,6 +6,6 @@ using UnityEngine;
 public class EnemyTemplate : ScriptableObject
 {
     [Header("Data")]
-    public float range = 14f, staggerTime = 1.5f;
+    public float range = 14f, staggerTime = 1.5f, decisionChance = 10f;
 }
 

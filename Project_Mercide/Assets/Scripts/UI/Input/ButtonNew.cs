@@ -200,6 +200,8 @@ namespace UnityEngine.UI
                 return;
 
             _down = false;
+
+            Up();
         }
 
         public override void OnPointerUp(PointerEventData eventData)

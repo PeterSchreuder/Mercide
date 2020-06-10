@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: MachineGun
   m_EditorClassIdentifier: 
   wpName: Machinegun
-  wpFireRate: 0.1
-  wpSound: {fileID: 8300000, guid: ca5c0139e8999ac499d115d423422200, type: 3}
+  wpFireRate: 4.8
   wpDamage: 25
+  wpReloadSpeed: 1
+  wpOwner: {fileID: 0}
+  wpMagazineSize: 30
+  wpAmmoBackup: -630
+  wpAmmoCurrent: 30
+  wpAmmoBackupMax: -630
+  wpSound: {fileID: 8300000, guid: ca5c0139e8999ac499d115d423422200, type: 3}
   wpBulletResourceName: Weapons/Guns/Bullet

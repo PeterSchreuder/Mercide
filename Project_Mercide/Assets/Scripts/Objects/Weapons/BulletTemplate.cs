@@ -13,4 +13,7 @@ public class BulletTemplate : ScriptableObject
     [HideInInspector]
     public float bltDamage = 0f;
 
+    [HideInInspector]
+    public GlobalObject bltOwner = null;
+
 }

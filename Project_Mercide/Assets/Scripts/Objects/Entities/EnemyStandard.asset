@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: EnemyStandard
   m_EditorClassIdentifier: 
   range: 14
-  staggerTime: 1.5
+  staggerTime: 0.75
+  decisionChance: 20

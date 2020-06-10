@@ -24,6 +24,7 @@ public class EnemyStateManager : MonoBehaviour
     private bool crIsRunning = false;// if the Coroutine is running
 
     // Data
+    private GameManager gameManager;
 
     private AIStates aiStateCurrent;
     public AIStates AIStateCurrent
@@ -32,10 +33,13 @@ public class EnemyStateManager : MonoBehaviour
 
         set
         {
+            if (AIStateCurrent == value)
+                return;
+
             AIStatePrevious = AIStateCurrent;
             aiStateCurrent = value;
 
-            if (enemyController.CheckIfDead() || (mainTarget && mainTarget.CheckIfDead()))
+            if (enemyController.CheckIfDead() || (mainTarget && mainTarget.CheckIfDead() && value != AIStates.Idle))
             {
                 AIStateCurrent = AIStates.Idle;
                 return;
@@ -55,6 +59,13 @@ public class EnemyStateManager : MonoBehaviour
 
                     break;
                 case AIStates.Staggered:// Hit by target(s)
+
+                    mainTarget = enemyController.lastHitter.gameObject.GetComponent<PlayerController>();
+
+                    enemyMovement.MoveStop();
+
+                    if (!crIsRunning)
+                        StartCoroutine(WaitForAction(AIStates.Staggered, enemyTemplate.staggerTime));
 
                     break;
                 case AIStates.Shooting:// Just shooting
@@ -104,14 +115,32 @@ public class EnemyStateManager : MonoBehaviour
         AIStateCurrent = AIStates.Idle;
     }
 
+    private void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
+
     private void FixedUpdate()
     {
-        if (enemyController.CheckIfDead() || (mainTarget && mainTarget.CheckIfDead()))
+        if (enemyController.CheckIfDead() || gameManager.GameStateCurrent != GameStates.Mid)
             return;
+
+        // If the mainTarget is dead. And the current state not is idle. Set it to idle
+        if (mainTarget && mainTarget.CheckIfDead() && AIStateCurrent != AIStates.Idle)
+        {
+            // Stop moving
+            enemyMovement.MoveStop();
+
+            AIStateCurrent = AIStates.Idle;
+            return;
+        }
 
         switch (AIStateCurrent)
         {
             case AIStates.Idle://===== Doing nothing =====
+
+                if (mainTarget && mainTarget.CheckIfDead())
+                    return;
 
                 mainTarget = TargetCheckInView();
 
@@ -145,22 +174,25 @@ public class EnemyStateManager : MonoBehaviour
 
                 TargetLookTowardMainTarget();
 
-
+                // Switch from state by checking the line
                 switch (TargetCheckSamePlatformLine())
                 {
                     case TargetVecticalPosition.Same:
 
-                        AIStateCurrent = AIStates.Shooting;
+                        if (Random.Range(0f, enemyTemplate.decisionChance) <= 9)
+                            AIStateCurrent = AIStates.Shooting;
 
                         break;
                     case TargetVecticalPosition.Above:
 
-                        AIStateCurrent = AIStates.RePositioning;
+                        if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.1)
+                            AIStateCurrent = AIStates.RePositioning;
 
                         break;
                     case TargetVecticalPosition.Under:
 
-                        AIStateCurrent = AIStates.RePositioning;
+                        if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.1)
+                            AIStateCurrent = AIStates.RePositioning;
 
                         break;
                 }
@@ -179,8 +211,7 @@ public class EnemyStateManager : MonoBehaviour
                 break;
             case AIStates.Staggered://===== Hit by player =====
 
-                if (!crIsRunning)
-                    StartCoroutine(WaitForAction(AIStates.Staggered, enemyTemplate.staggerTime));
+                
 
                 break;
             case AIStates.Shooting://===== Just shooting =====
@@ -189,32 +220,51 @@ public class EnemyStateManager : MonoBehaviour
 
                 if (Mathf.Abs(TargetCheckDistance().x) >= enemyTemplate.range)
                 {
+                    if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.8)
+                    {
+                        AIStateCurrent = AIStates.Alerted;
+                        break;
+                    }
+
+
                     AIStateCurrent = AIStates.CloseDistance;
                     break;
                 }
 
-                if (TargetCheckSamePlatformLine() != TargetVecticalPosition.Same)
+                if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.5)
+                    if (TargetCheckSamePlatformLine() != TargetVecticalPosition.Same)
+                    {
+                        AIStateCurrent = AIStates.RePositioning;
+                        break;
+                    }
+
+                if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.4)
                 {
-                    AIStateCurrent = AIStates.RePositioning;
-                    break;
+                    enemyController.Holster.Shoot();
                 }
 
                 break;
             case AIStates.CloseDistance://===== If while shooting the is out of range =====
 
+                if (Random.Range(0f, enemyTemplate.decisionChance) >= 0.2)
+                    return;
+
                 if (TargetCheckSamePlatformLine() != TargetVecticalPosition.Same)
                 {
                     AIStateCurrent = AIStates.RePositioning;
                     break;
                 }
 
-                if (Mathf.Abs(TargetCheckDistance().x) > enemyTemplate.range - 2f)
+                if (Mathf.Abs(TargetCheckDistance().x) > enemyTemplate.range)
                 {
                     enemyMovement.MoveDirection = TargetCheckDistance().x;
                     enemyMovement.Move();
                 }
                 else
                 {
+                    // Stop moving while shooting
+                    enemyMovement.MoveStop();
+
                     AIStateCurrent = AIStatePrevious;
                 }
 
@@ -228,6 +278,9 @@ public class EnemyStateManager : MonoBehaviour
                 {
                     case TargetVecticalPosition.Same:// If the same go back to the AIStatePrevious
 
+                        // Stop moving while shooting
+                        enemyMovement.MoveStop();
+
                         AIStateCurrent = AIStatePrevious;
 
                         break;
@@ -238,7 +291,6 @@ public class EnemyStateManager : MonoBehaviour
                         if (enemyMovement.CheckIfAbove() == EnvironmentTypes.Platform)
                         {
                             enemyMovement.Jump();
-                            //print("Jump");
                         }
                         else// Move toward the target
                         {
@@ -248,13 +300,15 @@ public class EnemyStateManager : MonoBehaviour
                             if (enemyMovement.CheckFront() == EnvironmentTypes.Cover)
                             {
                                 enemyMovement.Jump();
-                                //print("Jump the Cover");
                             }
                         }
                             
 
                         break;
                     case TargetVecticalPosition.Under:
+
+                        if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.5)
+                            enemyMovement.Duck();
 
                         // Move toward the target
                         enemyMovement.MoveDirection = TargetCheckDistance().x;
@@ -317,6 +371,11 @@ public class EnemyStateManager : MonoBehaviour
             textDebugState.text = AIStateCurrent.ToString() + "\n" + AIStatePrevious.ToString();
         else
             Debug.LogWarning("No text object found");
+    }
+
+    public void SetAIStateCurrent(AIStates _state)
+    {
+        AIStateCurrent = _state;
     }
 
     /// <summary>
