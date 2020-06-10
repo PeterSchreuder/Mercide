@@ -18,5 +18,5 @@ Interesting scripts:<br>
 
 [EventFireOnTrigger](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/Utils/EventFireOnTrigger.cs)
 
-[ButtonNew (An extention to the Unity UI Button)](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/UI/Input/ButtonNew.cs)
+[ButtonNew (An extention to the Unity UI Button to have more functions on input)](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/UI/Input/ButtonNew.cs)
 
