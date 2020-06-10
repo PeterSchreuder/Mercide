@@ -93,7 +93,7 @@ TextMesh:
   m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
   m_Color:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 16777215
 --- !u!114 &565548252008963051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,10 +154,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamNumber: 1
+  lastHitter: {fileID: 0}
   platformLine: 0
   platformLineInAir: 0
   holster: {fileID: 460376641130007552}
-  playerIndex: 0
 --- !u!1001 &7378871770042644679
 PrefabInstance:
   m_ObjectHideFlags: 0

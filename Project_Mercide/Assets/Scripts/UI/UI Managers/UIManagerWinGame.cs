@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UIManagerWinGame : UIManager
 {
     [SerializeField]
-    private Text score, kills, message;
+    private Text score = null, kills = null, message = null;
 
     private Action<EventParam> uiUpdateListenerScore;
     private Action<EventParam> uiUpdateListenerKills;

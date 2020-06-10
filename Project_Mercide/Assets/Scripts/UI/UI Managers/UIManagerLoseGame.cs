@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class UIManagerLoseGame : UIManager
 {
     [SerializeField]
-    private Text score;
+    private Text score = null;
 
     private Action<EventParam> uiUpdateListenerScore;
 

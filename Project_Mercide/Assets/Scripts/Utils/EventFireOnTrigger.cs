@@ -12,7 +12,7 @@ public class EventFireOnTrigger : MonoBehaviour
     private string eventName = "ClassOfSource:Test";
 
     [SerializeField]
-    private EventParam dataToSend;
+    private EventParam dataToSend = new EventParam();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

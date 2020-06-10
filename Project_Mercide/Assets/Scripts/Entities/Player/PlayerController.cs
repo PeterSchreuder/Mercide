@@ -16,7 +16,7 @@ public class PlayerController : EntityController
     private float invincibleTime = 2f;
 
     [SerializeField]
-    private SpriteRenderer entitySprite;
+    private SpriteRenderer entitySprite = null;
 
     protected override void Awake()
     {

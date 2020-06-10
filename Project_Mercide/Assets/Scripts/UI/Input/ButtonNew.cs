@@ -116,6 +116,8 @@ namespace UnityEngine.UI
 
             _down = false;
 
+            print("UP");
+
             UISystemProfilerApi.AddMarker("Button.onUp", this);
             m_OnUp.Invoke();
         }
@@ -200,6 +202,8 @@ namespace UnityEngine.UI
                 return;
 
             _down = false;
+
+            Up();
         }
 
         public override void OnPointerUp(PointerEventData eventData)

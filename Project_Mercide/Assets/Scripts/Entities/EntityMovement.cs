@@ -35,6 +35,8 @@ public class EntityMovement : MonoBehaviour
     protected float distToFeet;
     protected float deltaTime;
 
+    protected List<Collision2D> savedCollisions = new List<Collision2D>();
+
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -86,14 +88,57 @@ public class EntityMovement : MonoBehaviour
         {
             rb.AddForce(new Vector2(0f, jumpForce));
             jumpCount--;
+
+            UnDuck();
         }
     }
 
-    /// <summary>
-    /// Check when velocity.y == 0 if there is an platform above the entity
-    /// </summary>
-    /// <returns></returns>
-    public EnvironmentTypes CheckIfAbove()
+    public void Duck()
+    {
+        // Go through the list of savedCollisions and deactivate the collisions
+        foreach (Collision2D _collision in savedCollisions)
+        {
+            if (_collision.gameObject.CompareTag("Platform"))
+            {
+                print(_collision.gameObject.tag);
+                Physics2D.IgnoreCollision(_collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+            }                
+        }
+    }
+
+    public void UnDuck()
+    {
+        //List<Collision2D> _collisionsRemove = new List<Collision2D>();
+
+        // Go through the list of savedCollisions and activate the collisions again
+        foreach (Collision2D _collision in savedCollisions)
+        {
+            if (_collision.gameObject.CompareTag("Platform"))
+            {
+                print("UnDuck  " + _collision.gameObject.tag);
+                Physics2D.IgnoreCollision(_collision.gameObject.GetComponent<Collider2D>(), GetComponent<Collider2D>(), false);
+                //_collisionsRemove.Add(_collision);
+            }
+        }
+
+        //savedCollisions.RemoveAll(_collisionsRemove);
+    }
+
+    private void OnCollisionEnter2D(Collision2D _collision)
+    {
+        if (_collision.gameObject.CompareTag("Platform") && !savedCollisions.Contains(_collision))
+        {
+            savedCollisions.Add(_collision);
+            print(_collision.gameObject.tag);
+        }
+            
+    }
+
+        /// <summary>
+        /// Check when velocity.y == 0 if there is an platform above the entity
+        /// </summary>
+        /// <returns></returns>
+        public EnvironmentTypes CheckIfAbove()
     {
         return CheckFlank(head.position);
 

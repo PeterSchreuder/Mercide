@@ -181,13 +181,13 @@ public class EnemyStateManager : MonoBehaviour
                         break;
                     case TargetVecticalPosition.Above:
 
-                        if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.5)
+                        if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.1)
                             AIStateCurrent = AIStates.RePositioning;
 
                         break;
                     case TargetVecticalPosition.Under:
 
-                        if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.5)
+                        if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.1)
                             AIStateCurrent = AIStates.RePositioning;
 
                         break;
@@ -216,6 +216,13 @@ public class EnemyStateManager : MonoBehaviour
 
                 if (Mathf.Abs(TargetCheckDistance().x) >= enemyTemplate.range)
                 {
+                    if (Random.Range(0f, enemyTemplate.decisionChance) <= 2)
+                    {
+                        AIStateCurrent = AIStates.Alerted;
+                        break;
+                    }
+
+
                     AIStateCurrent = AIStates.CloseDistance;
                     break;
                 }
@@ -235,7 +242,7 @@ public class EnemyStateManager : MonoBehaviour
                 break;
             case AIStates.CloseDistance://===== If while shooting the is out of range =====
 
-                if (Random.Range(0f, enemyTemplate.decisionChance) >= 0.5)
+                if (Random.Range(0f, enemyTemplate.decisionChance) >= 0.2)
                     return;
 
                 if (TargetCheckSamePlatformLine() != TargetVecticalPosition.Same)
@@ -244,13 +251,16 @@ public class EnemyStateManager : MonoBehaviour
                     break;
                 }
 
-                if (Mathf.Abs(TargetCheckDistance().x) > enemyTemplate.range - 2f)
+                if (Mathf.Abs(TargetCheckDistance().x) > enemyTemplate.range)
                 {
                     enemyMovement.MoveDirection = TargetCheckDistance().x;
                     enemyMovement.Move();
                 }
                 else
                 {
+                    // Stop moving while shooting
+                    enemyMovement.MoveStop();
+
                     AIStateCurrent = AIStatePrevious;
                 }
 
@@ -264,6 +274,9 @@ public class EnemyStateManager : MonoBehaviour
                 {
                     case TargetVecticalPosition.Same:// If the same go back to the AIStatePrevious
 
+                        // Stop moving while shooting
+                        enemyMovement.MoveStop();
+
                         AIStateCurrent = AIStatePrevious;
 
                         break;
@@ -274,7 +287,6 @@ public class EnemyStateManager : MonoBehaviour
                         if (enemyMovement.CheckIfAbove() == EnvironmentTypes.Platform)
                         {
                             enemyMovement.Jump();
-                            //print("Jump");
                         }
                         else// Move toward the target
                         {
@@ -284,13 +296,15 @@ public class EnemyStateManager : MonoBehaviour
                             if (enemyMovement.CheckFront() == EnvironmentTypes.Cover)
                             {
                                 enemyMovement.Jump();
-                                //print("Jump the Cover");
                             }
                         }
                             
 
                         break;
                     case TargetVecticalPosition.Under:
+
+                        if (Random.Range(0f, enemyTemplate.decisionChance) <= 0.5)
+                            enemyMovement.Duck();
 
                         // Move toward the target
                         enemyMovement.MoveDirection = TargetCheckDistance().x;

@@ -22,7 +22,7 @@ public class PlayerMovement : EntityMovement
     // - Stop listening
     void OnDisable()
     {
-        EventManager.StopListening("ClassOfSource:Input", ProcessInput);
+        EventManager.StopListening("InputManager:Input", ProcessInput);
     }
 
     protected override void Start()
@@ -47,12 +47,18 @@ public class PlayerMovement : EntityMovement
     private void ProcessInput(EventParam _input)// int = horizontal, bool = jump
     {
         MoveDirection = _input.Float;//Input.GetAxis("Horizontal");
-                                   //Input.GetButtonDown("Jump")
+                                     //Input.GetButtonDown("Jump")
 
         if (_input.Bool && jumpCount > 0)
         {
             isJumping = true;
         }
+
+        if (_input.Int2 == 1)
+            UnDuck();
+
+        if (_input.Int == 1)
+            Duck();
     }
 
     public override void Move(float _direction)

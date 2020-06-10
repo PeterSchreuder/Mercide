@@ -8,10 +8,10 @@ using UnityEngine.UI;
 public class UIManagerMidGame : UIManager
 {
     [SerializeField]
-    private Text health, score;
+    private Text health = null, score = null;
 
     [SerializeField]
-    private Image hitFlashScreen;
+    private Image hitFlashScreen = null;
 
     private Action<EventParam> uiUpdateListenerHealth;
     private Action<EventParam> uiUpdateListenerScore;
