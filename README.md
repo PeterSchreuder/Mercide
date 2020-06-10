@@ -1,5 +1,5 @@
 # Mercide
-Side-scrolling shooter.<br>
+Side-scrolling shooter for Android.<br>
 This was made in 7 days with at first, some extended experience with Unity. This was a nice project to refresh my Unity skills and to add, I've learned alot more in these few days.
 
 **Documents:**<br>
@@ -23,8 +23,3 @@ This was made in 7 days with at first, some extended experience with Unity. This
 [- UIScreenManager](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/UI/UIScreenManager.cs)
 
 [- GameManager](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/Utils/GameManager.cs)
-
-[- EventFireOnTrigger](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/Utils/EventFireOnTrigger.cs)
-
-[- ButtonNew (An extention to the Unity UI Button to have more functions on input)](https://github.com/PeterSchreuder/Mercide/blob/master/Project_Mercide/Assets/Scripts/UI/Input/ButtonNew.cs)
-
