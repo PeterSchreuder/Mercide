@@ -1,5 +1,5 @@
 # Mercide
-Side-scrolling shooter.<br>
+Side-scrolling shooter for Android.<br>
 This was made in 7 days with at first, some extended experience with Unity. This was a nice project to refresh my Unity skills and to add, I've learned alot more in these few days.
 
 **Documents:**<br>
