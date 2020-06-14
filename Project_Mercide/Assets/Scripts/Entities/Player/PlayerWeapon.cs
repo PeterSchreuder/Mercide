@@ -1,18 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
-public class PlayerWeapon : MonoBehaviour
+
+public class PlayerWeapon : EntityWeapon
 {
-    // Start is called before the first frame update
-    void Start()
+    public override bool Shoot()
     {
-        
-    }
+        bool _return = false;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (base.Shoot())
+        {
+            _return = true;
+
+            CameraShaker.Instance.ShakeOnce(weaponTemplate.wpRecoil, weaponTemplate.wpRecoilRougness, weaponTemplate.wpRecoilFadeInTime, weaponTemplate.wpRecoilFadeOutTime);
+        }
+
+        return _return;
     }
 }

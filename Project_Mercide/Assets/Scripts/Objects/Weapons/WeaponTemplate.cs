@@ -14,6 +14,11 @@ public class WeaponTemplate : ScriptableObject
     [HideInInspector]
     public GlobalObject wpOwner = null;
 
+    [Header("Gameplay Related")]
+    public float wpRecoil = 1.5f;
+    public float wpRecoilRougness = 4f;
+    public float wpRecoilFadeInTime = 0.1f;
+    public float wpRecoilFadeOutTime = 0.75f;
 
     [Header("Ammo")]
     public int wpMagazineSize = 30;

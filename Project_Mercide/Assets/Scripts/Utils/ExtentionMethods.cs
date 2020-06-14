@@ -109,5 +109,11 @@ public static class ExtentionMethods
 
         return _return;
     }
+
+    public static T ArrayRandomValue<T>(this Array array)
+    {
+        if ((array == null) || (array.Length < 1)) return default(T);
+        return (T)array.GetValue(UnityEngine.Random.Range(0, array.Length));
+    }
 }
 

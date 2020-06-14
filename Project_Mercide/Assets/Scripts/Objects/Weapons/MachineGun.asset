@@ -17,9 +17,13 @@ MonoBehaviour:
   wpDamage: 25
   wpReloadSpeed: 1
   wpOwner: {fileID: 0}
+  wpRecoil: 1.5
+  wpRecoilRougness: 4
+  wpRecoilFadeInTime: 0.1
+  wpRecoilFadeOutTime: 0.75
   wpMagazineSize: 30
-  wpAmmoBackup: -630
+  wpAmmoBackup: -420
   wpAmmoCurrent: 30
-  wpAmmoBackupMax: -630
+  wpAmmoBackupMax: -420
   wpSound: {fileID: 8300000, guid: ca5c0139e8999ac499d115d423422200, type: 3}
   wpBulletResourceName: Weapons/Guns/Bullet
