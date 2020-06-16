@@ -1,6 +1,6 @@
 # Mercide
 Side-scrolling shooter for **Android**.<br>
-This was **made in 7 days** with at first, some extended experience with Unity. This was a nice project to refresh my Unity skills and to add, I've learned alot more in these few days.
+This was **made in 7 days** with at first, some extended experience with Unity. That has grown alot in these few days. This was a nice project to refresh my Unity skills.
 
 **Documents:**<br>
 [Trello Planning](https://trello.com/b/PGI18QNa/mercide)
